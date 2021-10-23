@@ -33,8 +33,14 @@ namespace MipsPipelineUI {
             this.cycleTimer = new System.Windows.Forms.Timer(this.components);
             this.panel1 = new System.Windows.Forms.Panel();
             this.pipelinePictureBox = new System.Windows.Forms.PictureBox();
+            this.loadMenuStrip = new System.Windows.Forms.MenuStrip();
+            this.loadMenu = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadFileMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.loadDirectInputMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.openDialog = new System.Windows.Forms.OpenFileDialog();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pipelinePictureBox)).BeginInit();
+            this.loadMenuStrip.SuspendLayout();
             this.SuspendLayout();
             // 
             // infoBox
@@ -42,10 +48,10 @@ namespace MipsPipelineUI {
             this.infoBox.BackColor = System.Drawing.SystemColors.ControlLightLight;
             this.infoBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
             this.infoBox.Font = new System.Drawing.Font("Lucida Sans Unicode", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.infoBox.Location = new System.Drawing.Point(927, 12);
+            this.infoBox.Location = new System.Drawing.Point(927, 27);
             this.infoBox.Name = "infoBox";
             this.infoBox.ReadOnly = true;
-            this.infoBox.Size = new System.Drawing.Size(219, 484);
+            this.infoBox.Size = new System.Drawing.Size(219, 469);
             this.infoBox.TabIndex = 3;
             this.infoBox.TabStop = false;
             this.infoBox.Text = "Some Text";
@@ -91,19 +97,57 @@ namespace MipsPipelineUI {
             // panel1
             // 
             this.panel1.Controls.Add(this.pipelinePictureBox);
-            this.panel1.Location = new System.Drawing.Point(12, 12);
+            this.panel1.Location = new System.Drawing.Point(12, 27);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(909, 570);
+            this.panel1.Size = new System.Drawing.Size(909, 555);
             this.panel1.TabIndex = 4;
             // 
             // pipelinePictureBox
             // 
             this.pipelinePictureBox.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("pipelinePictureBox.BackgroundImage")));
-            this.pipelinePictureBox.Location = new System.Drawing.Point(0, 0);
+            this.pipelinePictureBox.Location = new System.Drawing.Point(1, 0);
             this.pipelinePictureBox.Name = "pipelinePictureBox";
-            this.pipelinePictureBox.Size = new System.Drawing.Size(908, 570);
+            this.pipelinePictureBox.Size = new System.Drawing.Size(908, 555);
             this.pipelinePictureBox.TabIndex = 0;
             this.pipelinePictureBox.TabStop = false;
+            // 
+            // loadMenuStrip
+            // 
+            this.loadMenuStrip.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.loadMenu});
+            this.loadMenuStrip.Location = new System.Drawing.Point(0, 0);
+            this.loadMenuStrip.Name = "loadMenuStrip";
+            this.loadMenuStrip.Size = new System.Drawing.Size(1158, 24);
+            this.loadMenuStrip.TabIndex = 5;
+            this.loadMenuStrip.Text = "menuStrip1";
+            // 
+            // loadMenu
+            // 
+            this.loadMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.loadFileMenuItem,
+            this.loadDirectInputMenuItem});
+            this.loadMenu.Name = "loadMenu";
+            this.loadMenu.Size = new System.Drawing.Size(45, 20);
+            this.loadMenu.Text = "Load";
+            // 
+            // loadFileMenuItem
+            // 
+            this.loadFileMenuItem.Name = "loadFileMenuItem";
+            this.loadFileMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.loadFileMenuItem.Text = "From File";
+            this.loadFileMenuItem.Click += new System.EventHandler(this.loadButton_Click);
+            // 
+            // loadDirectInputMenuItem
+            // 
+            this.loadDirectInputMenuItem.Name = "loadDirectInputMenuItem";
+            this.loadDirectInputMenuItem.Size = new System.Drawing.Size(136, 22);
+            this.loadDirectInputMenuItem.Text = "Direct Input";
+            this.loadDirectInputMenuItem.Click += new System.EventHandler(this.loadDirectInputMenuItem_Click);
+            // 
+            // openDialog
+            // 
+            this.openDialog.FileName = "Open File";
+            this.openDialog.Filter = "txt files (*.txt)|*.txt";
             // 
             // SimulationForm
             // 
@@ -115,15 +159,20 @@ namespace MipsPipelineUI {
             this.Controls.Add(this.runButton);
             this.Controls.Add(this.loadButton);
             this.Controls.Add(this.infoBox);
+            this.Controls.Add(this.loadMenuStrip);
             this.MaximumSize = new System.Drawing.Size(1174, 637);
             this.MinimumSize = new System.Drawing.Size(1174, 637);
             this.Name = "SimulationForm";
+            this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Mips Simulation";
             this.Load += new System.EventHandler(this.SimulationForm_Load);
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pipelinePictureBox)).EndInit();
+            this.loadMenuStrip.ResumeLayout(false);
+            this.loadMenuStrip.PerformLayout();
             this.ResumeLayout(false);
+            this.PerformLayout();
 
         }
 
@@ -136,6 +185,11 @@ namespace MipsPipelineUI {
         private System.Windows.Forms.Timer cycleTimer;
         private System.Windows.Forms.Panel panel1;
         private System.Windows.Forms.PictureBox pipelinePictureBox;
+        private System.Windows.Forms.MenuStrip loadMenuStrip;
+        private System.Windows.Forms.ToolStripMenuItem loadMenu;
+        private System.Windows.Forms.ToolStripMenuItem loadFileMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem loadDirectInputMenuItem;
+        private System.Windows.Forms.OpenFileDialog openDialog;
     }
 }
 

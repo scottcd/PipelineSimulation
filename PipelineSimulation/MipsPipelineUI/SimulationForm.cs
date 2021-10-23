@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using System.IO;
 
 namespace MipsPipelineUI {
     public partial class SimulationForm : Form {
@@ -21,7 +22,23 @@ namespace MipsPipelineUI {
 
         private void loadButton_Click(object sender, EventArgs e)
         {
+            openDialog.InitialDirectory = Application.StartupPath;
+            if (openDialog.ShowDialog() == DialogResult.OK && !openDialog.FileName.Equals("")) 
+            {
+                StreamReader sr = new StreamReader(openDialog.FileName);
+                loadInstructions(sr.ReadToEnd());
+                sr.Close();
+            }
+        }
 
+        private void loadDirectInputMenuItem_Click(object sender, EventArgs e)
+        {
+            DirectInputForm inputForm = new DirectInputForm();
+            inputForm.ShowDialog();
+            if (inputForm.DirectInput != null)
+            {
+                loadInstructions(inputForm.DirectInput);
+            }
         }
 
         private void runButton_Click(object sender, EventArgs e)
@@ -37,6 +54,11 @@ namespace MipsPipelineUI {
         private void cycleTimer_Tick(object sender, EventArgs e)
         {
 
+        }
+
+        private void loadInstructions(string instructions) 
+        {
+            
         }
     }
 }
