@@ -36,7 +36,9 @@ namespace MipsPipelineUI {
             this.loadMenuStrip = new System.Windows.Forms.MenuStrip();
             this.loadMenu = new System.Windows.Forms.ToolStripMenuItem();
             this.loadFileMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.loadDirectInputMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
+            this.compileProgramToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openDialog = new System.Windows.Forms.OpenFileDialog();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pipelinePictureBox)).BeginInit();
@@ -61,7 +63,7 @@ namespace MipsPipelineUI {
             this.loadButton.Font = new System.Drawing.Font("Segoe UI", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.loadButton.Location = new System.Drawing.Point(927, 502);
             this.loadButton.Name = "loadButton";
-            this.loadButton.Size = new System.Drawing.Size(219, 37);
+            this.loadButton.Size = new System.Drawing.Size(216, 37);
             this.loadButton.TabIndex = 0;
             this.loadButton.Text = "Load";
             this.loadButton.UseVisualStyleBackColor = true;
@@ -91,7 +93,7 @@ namespace MipsPipelineUI {
             // 
             // cycleTimer
             // 
-            this.cycleTimer.Interval = 1500;
+            this.cycleTimer.Interval = 500;
             this.cycleTimer.Tick += new System.EventHandler(this.cycleTimer_Tick);
             // 
             // panel1
@@ -125,24 +127,40 @@ namespace MipsPipelineUI {
             // 
             this.loadMenu.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.loadFileMenuItem,
-            this.loadDirectInputMenuItem});
+            this.compileProgramToolStripMenuItem});
             this.loadMenu.Name = "loadMenu";
-            this.loadMenu.Size = new System.Drawing.Size(45, 20);
-            this.loadMenu.Text = "Load";
+            this.loadMenu.Size = new System.Drawing.Size(37, 20);
+            this.loadMenu.Text = "File";
             // 
             // loadFileMenuItem
             // 
+            this.loadFileMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.toolStripMenuItem1,
+            this.toolStripMenuItem2});
             this.loadFileMenuItem.Name = "loadFileMenuItem";
-            this.loadFileMenuItem.Size = new System.Drawing.Size(136, 22);
-            this.loadFileMenuItem.Text = "From File";
-            this.loadFileMenuItem.Click += new System.EventHandler(this.loadButton_Click);
+            this.loadFileMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.loadFileMenuItem.Text = "Load Program";
             // 
-            // loadDirectInputMenuItem
+            // toolStripMenuItem1
             // 
-            this.loadDirectInputMenuItem.Name = "loadDirectInputMenuItem";
-            this.loadDirectInputMenuItem.Size = new System.Drawing.Size(136, 22);
-            this.loadDirectInputMenuItem.Text = "Direct Input";
-            this.loadDirectInputMenuItem.Click += new System.EventHandler(this.loadDirectInputMenuItem_Click);
+            this.toolStripMenuItem1.Name = "toolStripMenuItem1";
+            this.toolStripMenuItem1.Size = new System.Drawing.Size(136, 22);
+            this.toolStripMenuItem1.Text = "From File";
+            this.toolStripMenuItem1.Click += new System.EventHandler(this.loadButton_Click);
+            // 
+            // toolStripMenuItem2
+            // 
+            this.toolStripMenuItem2.Name = "toolStripMenuItem2";
+            this.toolStripMenuItem2.Size = new System.Drawing.Size(136, 22);
+            this.toolStripMenuItem2.Text = "Direct Input";
+            this.toolStripMenuItem2.Click += new System.EventHandler(this.loadDirectInputMenuItem_Click);
+            // 
+            // compileProgramToolStripMenuItem
+            // 
+            this.compileProgramToolStripMenuItem.Name = "compileProgramToolStripMenuItem";
+            this.compileProgramToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.compileProgramToolStripMenuItem.Text = "Compile Program";
+            this.compileProgramToolStripMenuItem.Click += new System.EventHandler(this.compileProgramToolStripMenuItem_Click);
             // 
             // openDialog
             // 
@@ -188,8 +206,10 @@ namespace MipsPipelineUI {
         private System.Windows.Forms.MenuStrip loadMenuStrip;
         private System.Windows.Forms.ToolStripMenuItem loadMenu;
         private System.Windows.Forms.ToolStripMenuItem loadFileMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem loadDirectInputMenuItem;
         private System.Windows.Forms.OpenFileDialog openDialog;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
+        private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
+        private System.Windows.Forms.ToolStripMenuItem compileProgramToolStripMenuItem;
     }
 }
 

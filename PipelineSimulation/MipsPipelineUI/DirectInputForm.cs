@@ -24,6 +24,9 @@ namespace MipsPipelineUI
         {
             DirectInput = inputBox.Text;
             DialogResult = DialogResult.OK;
+            
+            
+
             Close();
         }
     }

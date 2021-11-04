@@ -1,0 +1,12 @@
+C:\Users\Chandler\Source\Repos\PipelineSimulation\PipelineSimulation\PipelineLibrary\bin\Debug\net5.0\PipelineLibrary.deps.json
+C:\Users\Chandler\Source\Repos\PipelineSimulation\PipelineSimulation\PipelineLibrary\bin\Debug\net5.0\PipelineLibrary.dll
+C:\Users\Chandler\Source\Repos\PipelineSimulation\PipelineSimulation\PipelineLibrary\bin\Debug\net5.0\ref\PipelineLibrary.dll
+C:\Users\Chandler\Source\Repos\PipelineSimulation\PipelineSimulation\PipelineLibrary\bin\Debug\net5.0\PipelineLibrary.pdb
+C:\Users\Chandler\Source\Repos\PipelineSimulation\PipelineSimulation\PipelineLibrary\obj\Debug\net5.0\PipelineLibrary.csproj.AssemblyReference.cache
+C:\Users\Chandler\Source\Repos\PipelineSimulation\PipelineSimulation\PipelineLibrary\obj\Debug\net5.0\PipelineLibrary.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\Chandler\Source\Repos\PipelineSimulation\PipelineSimulation\PipelineLibrary\obj\Debug\net5.0\PipelineLibrary.AssemblyInfoInputs.cache
+C:\Users\Chandler\Source\Repos\PipelineSimulation\PipelineSimulation\PipelineLibrary\obj\Debug\net5.0\PipelineLibrary.AssemblyInfo.cs
+C:\Users\Chandler\Source\Repos\PipelineSimulation\PipelineSimulation\PipelineLibrary\obj\Debug\net5.0\PipelineLibrary.csproj.CoreCompileInputs.cache
+C:\Users\Chandler\Source\Repos\PipelineSimulation\PipelineSimulation\PipelineLibrary\obj\Debug\net5.0\PipelineLibrary.dll
+C:\Users\Chandler\Source\Repos\PipelineSimulation\PipelineSimulation\PipelineLibrary\obj\Debug\net5.0\ref\PipelineLibrary.dll
+C:\Users\Chandler\Source\Repos\PipelineSimulation\PipelineSimulation\PipelineLibrary\obj\Debug\net5.0\PipelineLibrary.pdb

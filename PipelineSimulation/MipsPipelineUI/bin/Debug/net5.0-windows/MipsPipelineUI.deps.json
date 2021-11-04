@@ -1,0 +1,36 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v5.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v5.0": {
+      "MipsPipelineUI/1.0.0": {
+        "dependencies": {
+          "PipelineLibrary": "1.0.0"
+        },
+        "runtime": {
+          "MipsPipelineUI.dll": {}
+        }
+      },
+      "PipelineLibrary/1.0.0": {
+        "runtime": {
+          "PipelineLibrary.dll": {}
+        }
+      }
+    }
+  },
+  "libraries": {
+    "MipsPipelineUI/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "PipelineLibrary/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    }
+  }
+}
