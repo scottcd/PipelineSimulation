@@ -4,10 +4,10 @@ using PipelineLibrary;
 namespace PipelineUnitTesting {
     public class Tests {
 
-        public LogicController controller;
+        public ControlSignal controller;
         [SetUp]
         public void Setup() {
-            controller = new LogicController();
+            controller = new ControlSignal();
         }
 
         [Test]

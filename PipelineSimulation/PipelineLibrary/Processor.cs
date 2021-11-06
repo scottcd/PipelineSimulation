@@ -9,7 +9,7 @@ namespace PipelineLibrary {
     public class Processor {
         public List<IInstruction> InstructionMemory;
         public IInstruction [] Pipeline { get; set; }
-        public LogicController ControlLogic { get; set; }
+        public ControlSignal [] ControlUnit { get; set; }
         
         /*
                 still need 4 pipeline registers to pass data in between stages of the pipeline
@@ -20,14 +20,15 @@ namespace PipelineLibrary {
          */
 
         // ALUs
-        public Dictionary<RegisterEnum, int> MachineRegisters { get; set; }
+        public Dictionary<RegisterEnum, int> Registers { get; set; }
         // MUXs
+        // ALUs
 
         public Processor() {
             Pipeline = new IInstruction[5];
             InstructionMemory = new List<IInstruction>();
-            ControlLogic = new LogicController();
-            MachineRegisters = new Dictionary<RegisterEnum, int>() {
+            ControlUnit = new ControlSignal[3];             // need control signal for execute, memory access, and register write stages.
+            Registers = new Dictionary<RegisterEnum, int>() {
                 {RegisterEnum.r0, 0},
                 {RegisterEnum.r1, 0},
                 {RegisterEnum.r2, 0},
@@ -63,16 +64,31 @@ namespace PipelineLibrary {
             };
         }
 
-        public void RunCycle() {
+        public int RunCycle() {
             RegWrite();
             MemAccess();
             Execute();
             Decode();
-            Fetch();
+            int doneYet = Fetch();
+            if (doneYet == -1) { // if there are no more instructions
+                return -1;
+            }
+            else {              // else, return normally
+                foreach (var item in Pipeline) {
+                    System.Diagnostics.Debug.WriteLine(item);
+                }
+                return 0;
+            }
         }
 
         public string Compile(string[] instructions) {
-            InstructionMemory = PipelineFunctions.Compile(instructions);
+            try {
+                InstructionMemory = CompilerFunctions.Compile(instructions);
+            }
+            catch (NotSupportedException) {
+
+                throw;
+            }
 
             return "Instruction Memory\n";
         }
@@ -83,7 +99,7 @@ namespace PipelineLibrary {
         /// <returns></returns>
         public int Fetch() {
             int programCounter;
-            MachineRegisters.TryGetValue(RegisterEnum.r28, out programCounter);
+            Registers.TryGetValue(RegisterEnum.r28, out programCounter);
 
             IInstruction instruction = PipelineFunctions.Fetch(programCounter, InstructionMemory);
 
@@ -92,6 +108,7 @@ namespace PipelineLibrary {
             }
             else {
                 Pipeline[0] = instruction;
+                Registers[RegisterEnum.r28] += 4; // this will get sent to the ALU
                 return 0;
             }
         }

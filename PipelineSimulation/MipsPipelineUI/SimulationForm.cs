@@ -54,6 +54,11 @@ namespace MipsPipelineUI {
         private void cycleTimer_Tick(object sender, EventArgs e)
         {
             // timer
+            int doneYet = MIPS_Processor.RunCycle();
+            if (doneYet == -1) {
+                cycleTimer.Stop();
+                System.Diagnostics.Debug.WriteLine("Done!");
+            }
         }
 
         private void loadInstructions(string instructionstr) 
@@ -82,6 +87,7 @@ namespace MipsPipelineUI {
             }
 
             infoBox.Text = output;
+            cycleTimer.Start();
         }
     }
 }

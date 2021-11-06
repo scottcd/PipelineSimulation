@@ -1,0 +1,11 @@
+{
+  "ExpandedNodes": [
+    "",
+    "\\PipelineSimulation",
+    "\\PipelineSimulation\\MipsPipelineUI",
+    "\\PipelineSimulation\\PipelineLibrary",
+    "\\PipelineSimulation\\PipelineLibrary\\Instructions"
+  ],
+  "SelectedNode": "\\PipelineSimulation\\PipelineLibrary\\CompilerFunctions.cs",
+  "PreviewInSolutionExplorer": false
+}
