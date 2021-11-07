@@ -18,8 +18,6 @@ namespace PipelineLibrary {
                 2:
                 3:
          */
-
-        // ALUs
         public Dictionary<RegisterEnum, int> Registers { get; set; }
         // MUXs
         // ALUs
@@ -65,29 +63,53 @@ namespace PipelineLibrary {
         }
 
         public int RunCycle() {
-            RegWrite();
-            MemAccess();
-            Execute();
-            Decode();
+            // if there is no instruction to RegWrite, flush the pipeline
+            if (Pipeline[3] is not null) {
+                RegWrite();
+            }
+            else {
+                Pipeline[4] = null;
+            }
+            // if there is no instruction to MemAccess, flush the pipeline
+            if (Pipeline[2] is not null) {
+                MemAccess();
+            }
+            else {
+                Pipeline[3] = null;
+            }
+            // if there is no instruction to Execute, flush the pipeline
+            if (Pipeline[1] is not null) {
+                Execute();
+            }
+            else {
+                Pipeline[2] = null;
+            }
+            // if there is no instruction to Decode, flush the pipeline
+            if (Pipeline[0] is not null) {
+                Decode();
+            }
+            else {
+                Pipeline[1] = null;
+            }
+            // Try to fetch
             int doneYet = Fetch();
+            
             if (doneYet == -1) { // if there are no more instructions
-                return -1;
+                Pipeline[0] = null;
             }
-            else {              // else, return normally
-                foreach (var item in Pipeline) {
-                    System.Diagnostics.Debug.WriteLine(item);
-                }
-                return 0;
+            foreach (var item in Pipeline) {
+                System.Diagnostics.Debug.WriteLine(item);
             }
+
+            return 0;
         }
 
         public string Compile(string[] instructions) {
             try {
                 InstructionMemory = CompilerFunctions.Compile(instructions);
             }
-            catch (NotSupportedException) {
-
-                throw;
+            catch (NotSupportedException e ) {
+                System.Diagnostics.Debug.WriteLine(e.StackTrace);
             }
 
             return "Instruction Memory\n";
@@ -107,7 +129,8 @@ namespace PipelineLibrary {
                 return -1;
             }
             else {
-                Pipeline[0] = instruction;
+                // put instruction in fetch stage
+                Pipeline[0] = instruction;        
                 Registers[RegisterEnum.r28] += 4; // this will get sent to the ALU
                 return 0;
             }
@@ -115,7 +138,16 @@ namespace PipelineLibrary {
 
         // decode
         public void Decode() {
+            // get instruction from pipeline
+            IInstruction instruction = Pipeline[0];
 
+            // put instruction in decode stage
+            Pipeline[1] = instruction;
+
+            // get hazards -> need to implement
+
+            // fill control unit - need to implement
+            ControlUnit[0] = new ControlSignal(instruction.Opcode);
         }
 
         // execute

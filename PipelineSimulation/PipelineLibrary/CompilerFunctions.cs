@@ -28,53 +28,135 @@ namespace PipelineLibrary {
                     }
                     else {
                         instructionMemory.Add(new RTypeInstruction(formattedInstruction));  
-                    }
-                    
+                    }                   
                 }
                 else {
-                    bool correctFormat = CheckIType(formattedInstruction);
+                    bool correctFormat = CheckIType(formattedInstruction, opcode);
                     if (correctFormat == false) {
                         throw new NotSupportedException();
                     }
                     else {
                         instructionMemory.Add(new ITypeInstruction(formattedInstruction));  
-                    }
-                    
-                }
-                //else 
-                
-                // if we have a valid instruction, add it to instruction memory.
+                    }   
+                }   
             }
-
             return instructionMemory;
         }
 
-        private static bool CheckIType(string[] formattedInstruction) {
-            return false;
+        private static bool CheckIType(string[] formattedInstruction, OpcodeEnum opcode) {
+            if (opcode == OpcodeEnum.lw || opcode == OpcodeEnum.l_s) {
+                return CheckLoad(formattedInstruction);
+            }
+            else if (opcode == OpcodeEnum.sw || opcode == OpcodeEnum.s_s) {
+                return CheckStore(formattedInstruction);
+            }
+            else {
+                return CheckBranch(formattedInstruction);
+            }
+        }
+
+        private static bool CheckBranch(string [] formattedInstruction) {
+            string destination = formattedInstruction[1],
+                    source = formattedInstruction[2],
+                    immediate = formattedInstruction[3];
+
+            // check source
+            if (CheckRegisterFormat(source) == false) {
+                return false;
+            }
+            // check destination
+            if (CheckRegisterFormat(destination) == false) {
+                return false;
+            }
+            // check immediate
+            if (CheckImmediateFormat(immediate) == false) {
+                return false;
+            }
+
+            return true;
+        }
+
+        private static bool CheckStore(string[] formattedInstruction) {
+            string  source = formattedInstruction[1],
+                    immediate = formattedInstruction[2],
+                    destination = formattedInstruction[3];
+
+
+            // check source
+            if (CheckRegisterFormat(source) == false) {
+                return false;
+            }
+            // check destination
+            if (CheckRegisterFormat(destination) == false) {
+                return false;
+            }
+            // check immediate
+            if (CheckImmediateFormat(immediate) == false) {
+                return false;
+            }
+
+            return true;
+        }
+
+        private static bool CheckLoad(string[] formattedInstruction) {
+            string destination = formattedInstruction[1],
+                    immediate = formattedInstruction[2],
+                    source = formattedInstruction[3];
+
+            // check source
+            if (CheckRegisterFormat(source) == false) {
+                return false;
+            }
+            // check destination
+            if (CheckRegisterFormat(destination) == false) {
+                return false;
+            }
+            // check immediate
+            if (CheckImmediateFormat(immediate) == false) {
+                return false;
+            }
+
+            return true;
         }
 
         private static bool CheckRType(string[] formattedInstruction) {
-            string  d1 = formattedInstruction[1],
-                    s1 = formattedInstruction[2],
-                    s2 = formattedInstruction[3];
-            int registerNumber;
+            string  destination = formattedInstruction[1],
+                    source1 = formattedInstruction[2],
+                    source2 = formattedInstruction[3];
             // check d1
-            Int32.TryParse(d1.Substring(1), out registerNumber);
-            if (d1[0] == '$' && (0 <= registerNumber) && (registerNumber <= 31) ) {
-                return true;
+            if (CheckRegisterFormat(destination) == false) {
+                return false;
             }
             // check s1
-            Int32.TryParse(s1.Substring(1), out registerNumber);
-            if (s1[0] == '$' && (0 <= registerNumber) && (registerNumber <= 31)) {
-                return true;
+            if (CheckRegisterFormat(source1) == false) {
+                return false;
             }
             // check s2
-            Int32.TryParse(s2.Substring(1), out registerNumber);
-            if (s2[0] == '$' && (0 <= registerNumber) && (registerNumber <= 31)) {
-                return true;
+            if (CheckRegisterFormat(source2) == false) {
+                return false;
             }
 
-            return false;
+            return true;
+        }
+
+        public static bool CheckRegisterFormat(string registerString) {
+            Int32.TryParse(registerString.Substring(1), out int immediateValue);
+            if (registerString[0] == 'r' && (0 <= immediateValue) && (immediateValue <= 31)) {
+                return true;
+            }
+            else {
+                return false;
+            } 
+        }
+
+        public static bool CheckImmediateFormat(string immediateString) {
+            bool tried = Int32.TryParse(immediateString.Substring(1), out int immediateValue);
+            if ((-10000 <= immediateValue) && (immediateValue <= 10000) && tried == true) {
+                return true;
+            }
+            else {
+                return false;
+            }
         }
 
         private static string[] FormatInstruction(string item) {

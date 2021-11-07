@@ -36,21 +36,21 @@ namespace PipelineLibrary {
             RegisterEnum.TryParse(formattedInstruction[1], out register);
             DestinationRegister = register;
 
-            RegisterEnum.TryParse(formattedInstruction[3], out register);
-            SourceRegister1 = register;
-
             Int32.TryParse(formattedInstruction[2], out int immediate);
             Immediate = immediate;
+
+            RegisterEnum.TryParse(formattedInstruction[3], out register);
+            SourceRegister1 = register;
 
             DisplayString = $"{Opcode}\t{DestinationRegister}, {Immediate}({SourceRegister1})";
         }
         public void ParseStore(string[] formattedInstruction) {
             RegisterEnum register;
-            RegisterEnum.TryParse(formattedInstruction[3], out register);
-            DestinationRegister = register;
-
             RegisterEnum.TryParse(formattedInstruction[1], out register);
             SourceRegister1 = register;
+            
+            RegisterEnum.TryParse(formattedInstruction[3], out register);
+            DestinationRegister = register;
 
             Int32.TryParse(formattedInstruction[2], out int immediate);
             Immediate = immediate;
