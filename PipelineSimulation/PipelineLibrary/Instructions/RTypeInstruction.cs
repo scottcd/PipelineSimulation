@@ -11,6 +11,7 @@ namespace PipelineLibrary {
         public RegisterEnum SourceRegister1 { get; set; }
         public RegisterEnum SourceRegister2 { get; set; }
         private string DisplayString { get; set; }
+        public int[] CyclesToComplete { get; set; }
 
         public RTypeInstruction(string[] formattedInstruction) {
             OpcodeEnum.TryParse(formattedInstruction[0], out OpcodeEnum opcode);
@@ -25,6 +26,8 @@ namespace PipelineLibrary {
 
             RegisterEnum.TryParse(formattedInstruction[3], out register);
             DestinationRegister = register;
+
+            CyclesToComplete = new int[5] {1,2,3,4,5 };
 
             DisplayString = $"{Opcode}\t{SourceRegister1}, {SourceRegister2}, {DestinationRegister}";
         }

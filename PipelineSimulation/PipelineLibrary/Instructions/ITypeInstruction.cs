@@ -11,12 +11,14 @@ namespace PipelineLibrary {
         public RegisterEnum SourceRegister1 { get; set; }
         public int Immediate { get; set; }
         private string DisplayString { get; set; }
-        
+        public int[] CyclesToComplete { get; set; }
+
         public ITypeInstruction(string[] formattedInstruction) {
             OpcodeEnum.TryParse(formattedInstruction[0], out OpcodeEnum opcode);
             Opcode = opcode;
 
             DecideParse(formattedInstruction);
+            CyclesToComplete = new int[5] { 1, 2, 3, 4, 5 };
         }
 
         private void DecideParse(string[] formattedInstruction) {

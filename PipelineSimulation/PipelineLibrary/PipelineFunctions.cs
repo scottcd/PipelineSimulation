@@ -22,11 +22,42 @@ namespace PipelineLibrary {
         public static void Execute() {
 
         }
-        public static void MemAccess() {
 
+        /// <summary>
+        /// Check if instruction should be loaded into the Memory Access stage
+        /// </summary>
+        /// <param name="pipeLineRegister">EX/MEM Pipeline Register</param>
+        /// <returns>
+        ///             true, if instruction should be loaded
+        ///             false, if instruction should not be loaded
+        ///</returns>
+        public static bool CheckMemAccess(PipelineRegister pipeLineRegister) {
+            ControlSignal controlUnit = pipeLineRegister.ControlLogic;
+
+            if (controlUnit.MemWrite == true || controlUnit.MemRead == true || controlUnit.RegWrite) {
+                return true;
+            }
+            else {
+                return false;
+            }
         }
-        public static void RegWrite() {
+        /// <summary>
+        /// Check if instruction should be loaded into the Register Write stage
+        /// </summary>
+        /// <param name="pipeLineRegister">MEM/REG Pipeline Register</param>
+        /// <returns>
+        ///             true, if instruction should be loaded
+        ///             false, if instruction should not be loaded
+        ///</returns>
+        public static bool CheckRegWrite(PipelineRegister pipeLineRegister) {
+            ControlSignal controlUnit = pipeLineRegister.ControlLogic;
 
+            if (controlUnit.RegWrite == true) {
+                return true;
+            }
+            else {
+                return false;
+            }
         }
     }
 }

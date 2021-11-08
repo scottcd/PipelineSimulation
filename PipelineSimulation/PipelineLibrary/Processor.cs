@@ -8,24 +8,18 @@ using System.Threading.Tasks;
 namespace PipelineLibrary {
     public class Processor {
         public List<IInstruction> InstructionMemory;
-        public IInstruction [] Pipeline { get; set; }
-        public ControlSignal [] ControlUnit { get; set; }
+        public PipelineStage [] Pipeline { get; set; }
+        public PipelineRegister[] PipelineRegisters { get; set; }
         
-        /*
-                still need 4 pipeline registers to pass data in between stages of the pipeline
-                0:  fetched instruction
-                1:  decoded instruction values + logic
-                2:
-                3:
-         */
         public Dictionary<RegisterEnum, int> Registers { get; set; }
+        public int CycleNumber { get; set; }
         // MUXs
         // ALUs
+        // Main Memory
 
         public Processor() {
-            Pipeline = new IInstruction[5];
-            InstructionMemory = new List<IInstruction>();
-            ControlUnit = new ControlSignal[3];             // need control signal for execute, memory access, and register write stages.
+            Pipeline = new PipelineStage[5];
+            PipelineRegisters = new PipelineRegister[4];
             Registers = new Dictionary<RegisterEnum, int>() {
                 {RegisterEnum.r0, 0},
                 {RegisterEnum.r1, 0},
@@ -60,56 +54,37 @@ namespace PipelineLibrary {
                 {RegisterEnum.r30, 0},
                 {RegisterEnum.r31, 0},
             };
+            CycleNumber = 0;
         }
 
         public int RunCycle() {
-            // if there is no instruction to RegWrite, flush the pipeline
-            if (Pipeline[3] is not null) {
-                RegWrite();
-            }
-            else {
-                Pipeline[4] = null;
-            }
-            // if there is no instruction to MemAccess, flush the pipeline
-            if (Pipeline[2] is not null) {
-                MemAccess();
-            }
-            else {
-                Pipeline[3] = null;
-            }
-            // if there is no instruction to Execute, flush the pipeline
-            if (Pipeline[1] is not null) {
-                Execute();
-            }
-            else {
-                Pipeline[2] = null;
-            }
-            // if there is no instruction to Decode, flush the pipeline
-            if (Pipeline[0] is not null) {
-                Decode();
-            }
-            else {
-                Pipeline[1] = null;
-            }
-            // Try to fetch
-            int doneYet = Fetch();
-            
-            if (doneYet == -1) { // if there are no more instructions
-                Pipeline[0] = null;
-            }
-            foreach (var item in Pipeline) {
-                System.Diagnostics.Debug.WriteLine(item);
-            }
+            RegWrite();
+            MemAccess();
+            Execute();
+            Decode();
+            Fetch();
+
+            CycleNumber++;
+
+            System.Diagnostics.Debug.WriteLine($"{CycleNumber}");
+            System.Diagnostics.Debug.WriteLine($"Fetch:\t{Pipeline[0]}");
+            System.Diagnostics.Debug.WriteLine($"Decode:\t{Pipeline[1]}");
+            System.Diagnostics.Debug.WriteLine($"Execute:\t{Pipeline[2]}");
+            System.Diagnostics.Debug.WriteLine($"MemAccess:\t{Pipeline[3]}");
+            System.Diagnostics.Debug.WriteLine($"RegWrite:\t{Pipeline[4]}");
+            System.Diagnostics.Debug.WriteLine("");
 
             return 0;
         }
 
         public string Compile(string[] instructions) {
+            InstructionMemory = new List<IInstruction>();
             try {
                 InstructionMemory = CompilerFunctions.Compile(instructions);
             }
-            catch (NotSupportedException e ) {
+            catch (Exception e ) {
                 System.Diagnostics.Debug.WriteLine(e.StackTrace);
+                return "Invalid Syntax. Try again.\n";
             }
 
             return "Instruction Memory\n";
@@ -119,50 +94,141 @@ namespace PipelineLibrary {
         /// Gets the next instruction from memory, places that instruction in the fetch stage and first pipeline register
         /// </summary>
         /// <returns></returns>
-        public int Fetch() {
+        public void Fetch() {
             int programCounter;
             Registers.TryGetValue(RegisterEnum.r28, out programCounter);
 
             IInstruction instruction = PipelineFunctions.Fetch(programCounter, InstructionMemory);
 
             if (instruction is null) {
-                return -1;
+                // flush stage && pipeline register
+                Pipeline[0] = null;
+                PipelineRegisters[0] = null;
+                return;
             }
             else {
                 // put instruction in fetch stage
-                Pipeline[0] = instruction;        
+                Pipeline[0] = new PipelineStage(instruction);
+
+                // write pipeline register
+                PipelineRegisters[0] = new PipelineRegister(instruction);
                 Registers[RegisterEnum.r28] += 4; // this will get sent to the ALU
-                return 0;
+                return;
             }
         }
 
         // decode
         public void Decode() {
-            // get instruction from pipeline
-            IInstruction instruction = Pipeline[0];
+            if (PipelineRegisters[0] is null) {
+                // flush stage && pipeline register
+                Pipeline[1] = null;
+                PipelineRegisters[1] = null;
+                return;
+            }
+            // read pipeline register
+            IInstruction instruction = PipelineRegisters[0].Instruction;
 
             // put instruction in decode stage
-            Pipeline[1] = instruction;
+            Pipeline[1] = new PipelineStage(instruction);
+
+            // fill control unit - need to implement
+            ControlSignal controlUnit = new ControlSignal(instruction.Opcode);
 
             // get hazards -> need to implement
 
-            // fill control unit - need to implement
-            ControlUnit[0] = new ControlSignal(instruction.Opcode);
+            // write pipeline register
+            if (instruction is ITypeInstruction) {
+                ITypeInstruction i = (ITypeInstruction)instruction;
+                int operand1 = Registers[i.SourceRegister1];
+                int operand2 = i.Immediate;
+
+                PipelineRegisters[1] = new PipelineRegister(instruction, controlUnit, operand1, operand2);
+            }
+            else {
+                RTypeInstruction i = (RTypeInstruction)instruction;
+                int operand1 = Registers[i.SourceRegister1];
+                int operand2 = Registers[i.SourceRegister2];
+
+                PipelineRegisters[1] = new PipelineRegister(instruction, controlUnit, operand1, operand2);
+            }
         }
 
         // execute
         public void Execute() {
+            if (PipelineRegisters[1] is null) {
+                // flush stage && pipeline register
+                Pipeline[2] = null;
+                PipelineRegisters[2] = null;
+                return;
+            }
+            // read pipeline register
+            IInstruction instruction = PipelineRegisters[1].Instruction;
+            ControlSignal controlUnit = PipelineRegisters[1].ControlLogic;
 
+            // put instruction in execute stage
+            Pipeline[2] = new PipelineStage(instruction);
+
+            /*
+             *  EXECUTE LOGIC HERE
+             */
+
+            // write pipeline register
+            PipelineRegisters[2] = new PipelineRegister(instruction, controlUnit);
         }
 
         // memaccess
         public void MemAccess() {
+            if (PipelineRegisters[2] is null || PipelineFunctions.CheckMemAccess(PipelineRegisters[2]) == false) {
+                // flush stage && pipeline register
+                Pipeline[3] = null;
+                PipelineRegisters[3] = null;
+                return;
+            }
+            // read pipeline register
+            IInstruction instruction = PipelineRegisters[2].Instruction;
+            ControlSignal controlUnit = PipelineRegisters[2].ControlLogic;
 
+            if (controlUnit.RegWrite == true && controlUnit.MemRead == false) {
+                PipelineRegisters[3] = new PipelineRegister(instruction, controlUnit, PipelineRegisters[2].ValueToWrite);
+                return;
+            }
+
+            // put instruction in memAccess stage
+            Pipeline[3] = new PipelineStage(instruction);
+
+            // load
+            if (controlUnit.MemRead == true) {
+                // read memory to valueToWrite
+                int valueToWrite = 0;
+
+                // write pipeline register
+                PipelineRegisters[3] = new PipelineRegister(instruction, controlUnit, valueToWrite);
+            }
+            // store
+            else if (controlUnit.MemWrite == true) {
+                // write to memory
+            
+                PipelineRegisters[3] = new PipelineRegister(instruction, controlUnit);
+            }
+            
         }
 
         // regwrite
         public void RegWrite() {
+            if (PipelineRegisters[3] is null || PipelineFunctions.CheckRegWrite(PipelineRegisters[3]) == false) {
+                // flush stage
+                Pipeline[4] = null;
+                return;
+            }
+            // read pipeline register
+            IInstruction instruction = PipelineRegisters[3].Instruction;
+            ControlSignal controlUnit = PipelineRegisters[3].ControlLogic;
 
+            // put instruction in regWrite stage
+            Pipeline[4] = new PipelineStage(instruction);
+            
+            RegisterEnum destinationRegister = instruction.DestinationRegister;
+            Registers[destinationRegister] = PipelineRegisters[3].ValueToWrite;
         }
     }
 }
