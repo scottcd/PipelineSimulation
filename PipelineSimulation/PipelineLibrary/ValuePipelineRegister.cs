@@ -1,0 +1,24 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace PipelineLibrary {
+    public class ValuePipelineRegister : IPipelineRegister {
+        public IInstruction Instruction { get; set; }
+        public ControlSignal ControlLogic { get; private set; }
+        public int ValueToWrite { get; private set; }
+
+        public void FillPipeline(IInstruction instruction, ControlSignal controlLogic, int valueToWrite) {
+            Instruction = instruction;
+            ControlLogic = controlLogic;
+            ValueToWrite = valueToWrite;
+        }
+        public void FlushPipeline() {
+            Instruction = null;
+            ControlLogic = null;
+            ValueToWrite = -1;
+        }
+    }
+}

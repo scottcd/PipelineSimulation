@@ -150,7 +150,7 @@ namespace PipelineLibrary {
         }
 
         public static bool CheckImmediateFormat(string immediateString) {
-            bool tried = Int32.TryParse(immediateString.Substring(1), out int immediateValue);
+            bool tried = Int32.TryParse(immediateString, out int immediateValue);
             if ((-10000 <= immediateValue) && (immediateValue <= 10000) && tried == true) {
                 return true;
             }

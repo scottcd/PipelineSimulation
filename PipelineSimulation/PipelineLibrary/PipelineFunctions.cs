@@ -31,9 +31,7 @@ namespace PipelineLibrary {
         ///             true, if instruction should be loaded
         ///             false, if instruction should not be loaded
         ///</returns>
-        public static bool CheckMemAccess(PipelineRegister pipeLineRegister) {
-            ControlSignal controlUnit = pipeLineRegister.ControlLogic;
-
+        public static bool CheckMemAccess(ControlSignal controlUnit) {
             if (controlUnit.MemWrite == true || controlUnit.MemRead == true || controlUnit.RegWrite) {
                 return true;
             }
@@ -49,9 +47,7 @@ namespace PipelineLibrary {
         ///             true, if instruction should be loaded
         ///             false, if instruction should not be loaded
         ///</returns>
-        public static bool CheckRegWrite(PipelineRegister pipeLineRegister) {
-            ControlSignal controlUnit = pipeLineRegister.ControlLogic;
-
+        public static bool CheckRegWrite(ControlSignal controlUnit) {
             if (controlUnit.RegWrite == true) {
                 return true;
             }
