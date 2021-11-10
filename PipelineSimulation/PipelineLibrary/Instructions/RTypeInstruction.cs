@@ -18,13 +18,13 @@ namespace PipelineLibrary {
             Opcode = opcode;
             RegisterEnum register;
 
-            RegisterEnum.TryParse(formattedInstruction[1], out register);
+            RegisterEnum.TryParse(formattedInstruction[3], out register);
             SourceRegister1 = register;
 
             RegisterEnum.TryParse(formattedInstruction[2], out register);
             SourceRegister2 = register;
 
-            RegisterEnum.TryParse(formattedInstruction[3], out register);
+            RegisterEnum.TryParse(formattedInstruction[1], out register);
             DestinationRegister = register;
 
             CyclesToComplete = new int[5] {1,2,3,4,5 };

@@ -59,6 +59,8 @@ namespace PipelineLibrary {
 
             DisplayString = $"{Opcode}\t{SourceRegister1}, {Immediate}({DestinationRegister})";
         }
+
+
         public void ParseBranch(string[] formattedInstruction) {
             RegisterEnum register;
             RegisterEnum.TryParse(formattedInstruction[1], out register);

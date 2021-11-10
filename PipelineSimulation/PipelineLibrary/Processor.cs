@@ -34,41 +34,41 @@ namespace PipelineLibrary {
 
             Registers = new Dictionary<RegisterEnum, int>() {
                 {RegisterEnum.r0, 0},
-                {RegisterEnum.r1, 1},
-                {RegisterEnum.r2, 1},
-                {RegisterEnum.r3, 1},
-                {RegisterEnum.r4, 1},
-                {RegisterEnum.r5, 1},
-                {RegisterEnum.r6, 1},
+                {RegisterEnum.r1, 0},
+                {RegisterEnum.r2, 0},
+                {RegisterEnum.r3, 0},
+                {RegisterEnum.r4, 0},
+                {RegisterEnum.r5, 0},
+                {RegisterEnum.r6, 0},
                 {RegisterEnum.r7, 1},
-                {RegisterEnum.r8, 1},
-                {RegisterEnum.r9, 1},
-                {RegisterEnum.r10, 1},
-                {RegisterEnum.r11, 1},
-                {RegisterEnum.r12, 1},
-                {RegisterEnum.r13, 1},
-                {RegisterEnum.r14, 1},
-                {RegisterEnum.r15, 1},
-                {RegisterEnum.r16, 1},
-                {RegisterEnum.r17, 1},
-                {RegisterEnum.r18, 1},
-                {RegisterEnum.r19, 1},
-                {RegisterEnum.r20, 1},
-                {RegisterEnum.r21, 1},
-                {RegisterEnum.r22, 1},
-                {RegisterEnum.r23, 1},
-                {RegisterEnum.r24, 1},
-                {RegisterEnum.r25, 1},
-                {RegisterEnum.r26, 1},
-                {RegisterEnum.r27, 1},
+                {RegisterEnum.r8, 2},
+                {RegisterEnum.r9, 3},
+                {RegisterEnum.r10, 0},
+                {RegisterEnum.r11, 0},
+                {RegisterEnum.r12, 0},
+                {RegisterEnum.r13, 0},
+                {RegisterEnum.r14, 0},
+                {RegisterEnum.r15, 0},
+                {RegisterEnum.r16, 0},
+                {RegisterEnum.r17, 0},
+                {RegisterEnum.r18, 0},
+                {RegisterEnum.r19, 0},
+                {RegisterEnum.r20, 0},
+                {RegisterEnum.r21, 0},
+                {RegisterEnum.r22, 0},
+                {RegisterEnum.r23, 0},
+                {RegisterEnum.r24, 0},
+                {RegisterEnum.r25, 0},
+                {RegisterEnum.r26, 0},
+                {RegisterEnum.r27, 0},
                 {RegisterEnum.r28, 0},
-                {RegisterEnum.r29, 1},
-                {RegisterEnum.r30, 1},
-                {RegisterEnum.r31, 1},
+                {RegisterEnum.r29, 0},
+                {RegisterEnum.r30, 0},
+                {RegisterEnum.r31, 0},
             };
             CycleNumber = 0;
 
-            MainMemory = new int[2^32];
+            MainMemory = new int[100000];
         }
 
         public int RunCycle() {
@@ -165,7 +165,7 @@ namespace PipelineLibrary {
                     operand2 = i.Immediate;
                 }
                 else{
-                    operand1 = Registers[i.SourceRegister1];
+                    operand1 = Registers[i.DestinationRegister];
                     operand2 = i.Immediate;
                 }
 
@@ -240,17 +240,17 @@ namespace PipelineLibrary {
 
             // load
             if (controlUnit.MemRead == true) {
-                int readAddress = MEMREG_PipelineRegister.ValueToWrite;
+                int readAddress = EXMEM_PipelineRegister.ValueToWrite;
 
                 // read memory to valueToWrite
-                int valueToWrite = MainMemory[readAddress];
+                int valueRead = MainMemory[readAddress];
 
                 // write pipeline register
-                MEMREG_PipelineRegister.FillPipeline(instruction, controlUnit, valueToWrite);
+                MEMREG_PipelineRegister.FillPipeline(instruction, controlUnit, valueRead);
             }
             // store
             else if (controlUnit.MemWrite == true) {
-                int writeAddress = MEMREG_PipelineRegister.ValueToWrite;
+                int writeAddress = EXMEM_PipelineRegister.ValueToWrite;
                 // write to memory
                 int valueToWrite = Registers[EXMEM_PipelineRegister.IType.SourceRegister1];
                 
@@ -274,6 +274,14 @@ namespace PipelineLibrary {
             
             RegisterEnum destinationRegister = instruction.DestinationRegister;
             Registers[destinationRegister] = MEMREG_PipelineRegister.ValueToWrite;
+        }
+
+        public override string ToString() {
+            string output = $"MIPS Processor State\n";
+            foreach (var register in Registers) {
+                output += $"{register.Key}\t{register.Value}\n";
+            }
+            return output;
         }
     }
 }

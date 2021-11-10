@@ -18,11 +18,8 @@ namespace MipsPipelineUI {
         public SimulationForm() {
             InitializeComponent();
             MIPS_Processor = new Processor();
-        }
-
-        private void SimulationForm_Load(object sender, EventArgs e)
-        {
-
+            stateBox.Text = MIPS_Processor.ToString();
+            infoBox.Text = "Instructions here";
         }
 
         private void loadButton_Click(object sender, EventArgs e)
@@ -59,6 +56,7 @@ namespace MipsPipelineUI {
                 cycleTimer.Stop();
                 System.Diagnostics.Debug.WriteLine("Done!");
             }
+            stateBox.Text = MIPS_Processor.ToString();
         }
 
         private void loadInstructions(string instructionstr) 

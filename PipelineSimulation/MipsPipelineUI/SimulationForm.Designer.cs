@@ -40,6 +40,7 @@ namespace MipsPipelineUI {
             this.toolStripMenuItem2 = new System.Windows.Forms.ToolStripMenuItem();
             this.compileProgramToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openDialog = new System.Windows.Forms.OpenFileDialog();
+            this.stateBox = new System.Windows.Forms.RichTextBox();
             this.panel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pipelinePictureBox)).BeginInit();
             this.loadMenuStrip.SuspendLayout();
@@ -53,7 +54,7 @@ namespace MipsPipelineUI {
             this.infoBox.Location = new System.Drawing.Point(927, 27);
             this.infoBox.Name = "infoBox";
             this.infoBox.ReadOnly = true;
-            this.infoBox.Size = new System.Drawing.Size(219, 469);
+            this.infoBox.Size = new System.Drawing.Size(219, 221);
             this.infoBox.TabIndex = 3;
             this.infoBox.TabStop = false;
             this.infoBox.Text = "Some Text";
@@ -138,7 +139,7 @@ namespace MipsPipelineUI {
             this.toolStripMenuItem1,
             this.toolStripMenuItem2});
             this.loadFileMenuItem.Name = "loadFileMenuItem";
-            this.loadFileMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.loadFileMenuItem.Size = new System.Drawing.Size(168, 22);
             this.loadFileMenuItem.Text = "Load Program";
             // 
             // toolStripMenuItem1
@@ -158,7 +159,7 @@ namespace MipsPipelineUI {
             // compileProgramToolStripMenuItem
             // 
             this.compileProgramToolStripMenuItem.Name = "compileProgramToolStripMenuItem";
-            this.compileProgramToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.compileProgramToolStripMenuItem.Size = new System.Drawing.Size(168, 22);
             this.compileProgramToolStripMenuItem.Text = "Compile Program";
             this.compileProgramToolStripMenuItem.Click += new System.EventHandler(this.compileProgramToolStripMenuItem_Click);
             // 
@@ -167,11 +168,25 @@ namespace MipsPipelineUI {
             this.openDialog.FileName = "Open File";
             this.openDialog.Filter = "txt files (*.txt)|*.txt";
             // 
+            // stateBox
+            // 
+            this.stateBox.BackColor = System.Drawing.SystemColors.ControlLightLight;
+            this.stateBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.stateBox.Font = new System.Drawing.Font("Lucida Sans Unicode", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
+            this.stateBox.Location = new System.Drawing.Point(927, 265);
+            this.stateBox.Name = "stateBox";
+            this.stateBox.ReadOnly = true;
+            this.stateBox.Size = new System.Drawing.Size(219, 221);
+            this.stateBox.TabIndex = 6;
+            this.stateBox.TabStop = false;
+            this.stateBox.Text = "Some Text";
+            // 
             // SimulationForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1158, 598);
+            this.Controls.Add(this.stateBox);
             this.Controls.Add(this.panel1);
             this.Controls.Add(this.stepButton);
             this.Controls.Add(this.runButton);
@@ -184,7 +199,6 @@ namespace MipsPipelineUI {
             this.ShowIcon = false;
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Mips Simulation";
-            this.Load += new System.EventHandler(this.SimulationForm_Load);
             this.panel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.pipelinePictureBox)).EndInit();
             this.loadMenuStrip.ResumeLayout(false);
@@ -210,6 +224,7 @@ namespace MipsPipelineUI {
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem1;
         private System.Windows.Forms.ToolStripMenuItem toolStripMenuItem2;
         private System.Windows.Forms.ToolStripMenuItem compileProgramToolStripMenuItem;
+        private System.Windows.Forms.RichTextBox stateBox;
     }
 }
 
