@@ -1,7 +1,8 @@
 {
   "ExpandedNodes": [
-    ""
+    "",
+    "\\PipelineSimulation",
+    "\\PipelineSimulation\\PipelineLibrary"
   ],
-  "SelectedNode": "\\PipelineSimulation.sln",
   "PreviewInSolutionExplorer": false
 }
