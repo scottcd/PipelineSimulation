@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace PipelineLibrary {
     public class Processor {
         public List<IInstruction> InstructionMemory;
-        public PipelineStage [] Pipeline { get; set; }
+        public PipelineStage[] Pipeline { get; set; }
         public InstructionPipelineRegister IFID_PipelineRegister { get; set; }
         public FullPipelineRegister IDEX_PipelineRegister { get; set; }
         public InstructionControlPipelineRegister EXMEM_PipelineRegister { get; set; }
@@ -21,6 +21,9 @@ namespace PipelineLibrary {
         public int[] MainMemory { get; set; }
         public int ExecutionCyclesLeft { get; set; }
         public Dictionary<OpcodeEnum, int> ExecutionCycleDictionary { get; set; }
+        public HazardDetection Hazards {get;set;}
+        
+
 
         public Processor() {
             Pipeline = new PipelineStage[5];
@@ -84,18 +87,43 @@ namespace PipelineLibrary {
                 {OpcodeEnum.s_s,2 }
             };
 
+            Hazards = new HazardDetection();
+            
             CycleNumber = 0;
             ExecutionCyclesLeft = -1;
             MainMemory = new int[100000];
         }
 
         public int RunCycle() {
-            
+            Pipeline[4] = null;
             CycleNumber++;
             if (ExecutionCyclesLeft > 1) {
                 Execute();
             }
-            // INSERT DATA HAZARD CATCH HERE
+            else if (Hazards.HazardStall.Item1 is true) {
+                Hazard hazard = Hazards.HazardStall.Item2;
+                
+                // stall and either execute, mem, or regwrite
+                switch (Hazards.HazardStall.Item2.Stage) {
+                    case 2:
+                        Execute();
+                        break;
+                    case 3:
+
+                        if (hazard.ControlUnit.MemRead is true ||
+                            hazard.ControlUnit.MemWrite is true) {
+                            MemAccess();
+                        }
+                        else {
+                            RegWrite();
+                        }
+                        break;
+                    default:
+                        RegWrite();
+                        break;
+
+                }
+            }
             else {
                 if (MEMREG_PipelineRegister.Instruction is null || PipelineFunctions.CheckRegWrite(MEMREG_PipelineRegister.ControlLogic) == false) {
                     Pipeline[4] = null;
@@ -127,18 +155,20 @@ namespace PipelineLibrary {
                     Decode();
                 }
                 Fetch();
+                
             }
             
-
             System.Diagnostics.Debug.WriteLine($"{CycleNumber}");
-            System.Diagnostics.Debug.WriteLine($"Fetch:    \t{Pipeline[0]} {ExecutionCyclesLeft}");
+            System.Diagnostics.Debug.WriteLine($"Fetch:    \t{Pipeline[0]}");
             System.Diagnostics.Debug.WriteLine($"Decode:   \t{Pipeline[1]}");
             System.Diagnostics.Debug.WriteLine($"Execute:  \t{Pipeline[2]}");
             System.Diagnostics.Debug.WriteLine($"MemAccess:\t{Pipeline[3]}");
             System.Diagnostics.Debug.WriteLine($"RegWrite: \t{Pipeline[4]}");
             System.Diagnostics.Debug.WriteLine("");
 
-
+            if (ExecutionCyclesLeft == 0) {
+                Hazards.IncrementStage();
+            }
             return 0;
         }
 
@@ -193,35 +223,10 @@ namespace PipelineLibrary {
             // fill control unit - need to implement
             ControlSignal controlUnit = new ControlSignal(instruction.Opcode);
 
-            // get hazards -> need to implement
+            IDEX_PipelineRegister.FillPipeline(instruction, controlUnit);
 
-            // write pipeline register
-            if (instruction is ITypeInstruction) {
-                ITypeInstruction i = (ITypeInstruction)instruction;
-                int operand1, operand2;
-
-                if (i.Opcode == OpcodeEnum.beq || i.Opcode == OpcodeEnum.bne) {
-                    operand1 = Registers[i.SourceRegister1];
-                    operand2 = Registers[i.DestinationRegister];
-                }
-                else if (i.Opcode == OpcodeEnum.lw || i.Opcode == OpcodeEnum.l_s) {
-                    operand1 = Registers[i.DestinationRegister];
-                    operand2 = i.Immediate;
-                }
-                else{
-                    operand1 = Registers[i.DestinationRegister];
-                    operand2 = i.Immediate;
-                }
-
-                IDEX_PipelineRegister.FillPipeline(instruction, controlUnit, operand1, operand2);
-            }
-            else {
-                RTypeInstruction i = (RTypeInstruction)instruction;
-                int operand1 = Registers[i.SourceRegister1];
-                int operand2 = Registers[i.SourceRegister2];
-
-                IDEX_PipelineRegister.FillPipeline(instruction, controlUnit, operand1, operand2);
-            }
+            Hazards.CheckForHazardMatch(instruction, controlUnit);
+            Hazards.CheckToAddHazard(instruction, controlUnit);
         }
 
         // execute
@@ -231,35 +236,55 @@ namespace PipelineLibrary {
                 IInstruction instruction = IDEX_PipelineRegister.Instruction;
                 ControlSignal controlUnit = IDEX_PipelineRegister.ControlLogic;
                 ExecutionCyclesLeft = ExecutionCycleDictionary[instruction.Opcode];
+
+                int operand1, operand2;
+
+
+                if (instruction is ITypeInstruction) {
+                    ITypeInstruction i = (ITypeInstruction)instruction;
+                    if (i.Opcode == OpcodeEnum.beq || i.Opcode == OpcodeEnum.bne) {
+                        operand1 = Registers[i.SourceRegister1];
+                        operand2 = Registers[i.DestinationRegister];
+                    }
+                    else if (i.Opcode == OpcodeEnum.lw || i.Opcode == OpcodeEnum.l_s) {
+                        operand1 = Registers[i.DestinationRegister];
+                        operand2 = i.Immediate;
+                    }
+                    else {
+                        operand1 = Registers[i.DestinationRegister];
+                        operand2 = i.Immediate;
+                    }
+                }
+                else {
+                    RTypeInstruction i = (RTypeInstruction)instruction;
+                    operand1 = Registers[i.SourceRegister1];
+                    operand2 = Registers[i.SourceRegister2];
+                }
+                
                 // put instruction in execute stage
                 Pipeline[2] = new PipelineStage(instruction);
 
-                // need seperate logic for branch
-                int valueToWrite = ExecutionALU.ExecuteOperation(controlUnit.ALUOp, IDEX_PipelineRegister.Operand1, IDEX_PipelineRegister.Operand2);
+                int valueToWrite = ExecutionALU.ExecuteOperation(controlUnit.ALUOp, operand1, operand2);
 
-                    if (controlUnit.Branch == false) {
-                        // write pipeline register
-                        if (instruction is RTypeInstruction) {
-                            MEMREG_PipelineRegister.FillPipeline(instruction, controlUnit, valueToWrite);
+                if (controlUnit.Branch == false) {
+                    MEMREG_PipelineRegister.FillPipeline(instruction, controlUnit, valueToWrite);
+                    return;
+                }
+                else {
+                    ITypeInstruction i = (ITypeInstruction)instruction;
+                    if (instruction.Opcode == OpcodeEnum.beq) {
+                        if (valueToWrite == 0) {
+                            Registers[RegisterEnum.r28] = BranchALU.AddOperands(Registers[RegisterEnum.r28], i.Immediate);
+                            return;
                         }
-                        EXMEM_PipelineRegister.FillPipeline(instruction, controlUnit, valueToWrite);
-                        return;
                     }
-                    else {
-                        ITypeInstruction i = (ITypeInstruction)instruction;
-                        if (instruction.Opcode == OpcodeEnum.beq) {
-                            if (valueToWrite == 0) {
-                                Registers[RegisterEnum.r28] = BranchALU.AddOperands(Registers[RegisterEnum.r28], i.Immediate);
-                                return;
-                            }
+                    else if (instruction.Opcode == OpcodeEnum.bne) {
+                        if (valueToWrite != 0) {
+                            Registers[RegisterEnum.r28] = BranchALU.AddOperands(Registers[RegisterEnum.r28], i.Immediate);
+                            return;
                         }
-                        else if (instruction.Opcode == OpcodeEnum.bne) {
-                            if (valueToWrite != 0) {
-                                Registers[RegisterEnum.r28] = BranchALU.AddOperands(Registers[RegisterEnum.r28], i.Immediate);
-                                return;
-                            }
-                        }
-                    }   
+                    }
+                }   
             }
             else if (ExecutionCyclesLeft > 0) {
                 ExecutionCyclesLeft--;
@@ -312,6 +337,8 @@ namespace PipelineLibrary {
             
             RegisterEnum destinationRegister = instruction.DestinationRegister;
             Registers[destinationRegister] = MEMREG_PipelineRegister.ValueToWrite;
+            Hazards.CheckToRemoveHazard(instruction, controlUnit);
+            MEMREG_PipelineRegister.FlushPipeline();
         }
 
         public override string ToString() {

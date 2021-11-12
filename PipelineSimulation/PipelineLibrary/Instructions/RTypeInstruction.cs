@@ -29,7 +29,7 @@ namespace PipelineLibrary {
 
             CyclesToComplete = 9;
 
-            DisplayString = $"{Opcode}\t{SourceRegister1}, {SourceRegister2}, {DestinationRegister}";
+            DisplayString = $"{Opcode}\t{DestinationRegister}, {SourceRegister1}, {SourceRegister2}";
         }
 
         public override string ToString() {
