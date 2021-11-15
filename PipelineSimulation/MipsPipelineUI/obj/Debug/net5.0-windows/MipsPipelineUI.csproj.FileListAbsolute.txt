@@ -21,3 +21,9 @@ C:\Users\Chandler\Source\Repos\PipelineSimulation\PipelineSimulation\MipsPipelin
 C:\Users\Chandler\Source\Repos\PipelineSimulation\PipelineSimulation\MipsPipelineUI\obj\Debug\net5.0-windows\ref\MipsPipelineUI.dll
 C:\Users\Chandler\Source\Repos\PipelineSimulation\PipelineSimulation\MipsPipelineUI\obj\Debug\net5.0-windows\MipsPipelineUI.pdb
 C:\Users\Chandler\Source\Repos\PipelineSimulation\PipelineSimulation\MipsPipelineUI\obj\Debug\net5.0-windows\MipsPipelineUI.genruntimeconfig.cache
+C:\Users\Chandler\Source\Repos\PipelineSimulation\PipelineSimulation\MipsPipelineUI\obj\Debug\net5.0-windows\MipsPipelineUI.AboutControlForm.resources
+C:\Users\Chandler\Source\Repos\PipelineSimulation\PipelineSimulation\MipsPipelineUI\obj\Debug\net5.0-windows\MipsPipelineUI.AboutInstructionsForm.resources
+C:\Users\Chandler\Source\Repos\PipelineSimulation\PipelineSimulation\MipsPipelineUI\obj\Debug\net5.0-windows\MipsPipelineUI.AboutRegistersForm.resources
+C:\Users\Chandler\Source\Repos\PipelineSimulation\PipelineSimulation\MipsPipelineUI\obj\Debug\net5.0-windows\MipsPipelineUI.AboutStagesForm.resources
+C:\Users\Chandler\Source\Repos\PipelineSimulation\PipelineSimulation\MipsPipelineUI\obj\Debug\net5.0-windows\MipsPipelineUI.ConfigClockForm.resources
+C:\Users\Chandler\Source\Repos\PipelineSimulation\PipelineSimulation\MipsPipelineUI\obj\Debug\net5.0-windows\MipsPipelineUI.ConfigInstructionsForm.resources

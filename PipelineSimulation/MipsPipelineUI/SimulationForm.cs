@@ -12,55 +12,55 @@ using PipelineLibrary;
 
 namespace MipsPipelineUI {
     public partial class SimulationForm : Form {
-        public string[]  LoadedInstructions { get; set; }
+        public string[] LoadedInstructions { get; set; }
         Processor MIPS_Processor { get; set; }
+        public bool IsRunning { get; set; }
 
         public SimulationForm() {
             InitializeComponent();
             MIPS_Processor = new Processor();
-            stateBox.Text = MIPS_Processor.ToString();
-            infoBox.Text = "Instructions here";
+            ProcessorStateBox.Text = MIPS_Processor.ToString();
+            InstructionTextBox.Text = "Instructions here";
+            IsRunning = false;
+            cycleTimer.Interval = MIPS_Processor.ClockSpeed;
         }
 
-        private void loadButton_Click(object sender, EventArgs e)
-        {
-            openDialog.InitialDirectory = Application.StartupPath;
-            if (openDialog.ShowDialog() == DialogResult.OK && !openDialog.FileName.Equals("")) 
-            {
-                StreamReader sr = new StreamReader(openDialog.FileName);
-                loadInstructions(sr.ReadToEnd());
-                sr.Close();
-            }
-        }
-
-        private void loadDirectInputMenuItem_Click(object sender, EventArgs e)
-        {
+        private void loadDirectInputMenuItem_Click(object sender, EventArgs e) {
             DirectInputForm inputForm = new DirectInputForm();
             inputForm.ShowDialog();
-            if (inputForm.DirectInput != null)
-            {
+            if (inputForm.DirectInput != null) {
                 loadInstructions(inputForm.DirectInput);
             }
         }
 
-        private void runButton_Click(object sender, EventArgs e)
-        {
+        private void runButton_Click(object sender, EventArgs e) {
+            if (IsRunning is true) {
+                runButton.Text = "Run";
+                cycleTimer.Stop();
+                IsRunning = false;
+            }
+            else {
+                runButton.Text = "Stop";
+                cycleTimer.Interval = MIPS_Processor.ClockSpeed;
+                cycleTimer.Start();
+                IsRunning = true;
+            }
 
         }
 
-        private void cycleTimer_Tick(object sender, EventArgs e)
-        {
+        private void cycleTimer_Tick(object sender, EventArgs e) {
             // timer
             int doneYet = MIPS_Processor.RunCycle();
             if (doneYet == -1) {
                 cycleTimer.Stop();
+                stepButton.Enabled = false;
+                runButton.Enabled = false;
                 System.Diagnostics.Debug.WriteLine("Done!");
             }
-            stateBox.Text = MIPS_Processor.ToString();
+            ProcessorStateBox.Text = MIPS_Processor.ToString();
         }
 
-        private void loadInstructions(string instructionstr) 
-        {
+        private void loadInstructions(string instructionstr) {
             LoadedInstructions = instructionstr.Split("\n");
 
             string instructionOutput = $"Program Instructions\n";
@@ -69,11 +69,18 @@ namespace MipsPipelineUI {
                 instructionOutput += $"{item}\n";
             }
 
-            infoBox.Text = instructionOutput;
+            InstructionTextBox.Text = instructionOutput;
         }
 
         private void stepButton_Click(object sender, EventArgs e) {
+            int doneYet = MIPS_Processor.RunCycle();
 
+            if (doneYet == -1) {
+                stepButton.Enabled = false;
+                runButton.Enabled = false;
+            }
+
+            ProcessorStateBox.Text = MIPS_Processor.ToString();
         }
 
         private void compileProgramToolStripMenuItem_Click(object sender, EventArgs e) {
@@ -83,9 +90,48 @@ namespace MipsPipelineUI {
             foreach (var instruction in MIPS_Processor.InstructionMemory) {
                 output += instruction + "\n";
             }
+            stepButton.Enabled = true;
+            runButton.Enabled = true;
+            InstructionTextBox.Text = output;
+        }
 
-            infoBox.Text = output;
-            cycleTimer.Start();
+        private void toolStripMenuItem1_Click(object sender, EventArgs e) {
+            openDialog.InitialDirectory = Application.StartupPath;
+            if (openDialog.ShowDialog() == DialogResult.OK && !openDialog.FileName.Equals("")) {
+                StreamReader sr = new StreamReader(openDialog.FileName);
+                loadInstructions(sr.ReadToEnd());
+                sr.Close();
+            }
+        }
+
+        private void instructionLatenciesToolStripMenuItem_Click(object sender, EventArgs e) {
+            ConfigInstructionsForm inputForm = new ConfigInstructionsForm();
+            inputForm.ShowDialog();
+        }
+
+        private void clockSpeedToolStripMenuItem_Click(object sender, EventArgs e) {
+            ConfigClockForm inputForm = new ConfigClockForm();
+            inputForm.ShowDialog();
+        }
+
+        private void instructionsToolStripMenuItem_Click(object sender, EventArgs e) {
+            AboutInstructionsForm inputForm = new AboutInstructionsForm();
+            inputForm.ShowDialog();
+        }
+
+        private void registersToolStripMenuItem_Click(object sender, EventArgs e) {
+            AboutRegistersForm inputForm = new AboutRegistersForm();
+            inputForm.ShowDialog();
+        }
+
+        private void pipelineStagesToolStripMenuItem_Click(object sender, EventArgs e) {
+            AboutStagesForm inputForm = new AboutStagesForm();
+            inputForm.ShowDialog();
+        }
+
+        private void controlUnitToolStripMenuItem_Click(object sender, EventArgs e) {
+            AboutControlForm inputForm = new AboutControlForm();
+            inputForm.ShowDialog();
         }
     }
 }

@@ -2,10 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\PipelineSimulation",
-    "\\PipelineSimulation\\PipelineLibrary",
-    "\\PipelineSimulation\\PipelineLibrary\\Instructions",
-    "\\PipelineSimulation\\PipelineLibrary\\ProcessorModels"
+    "\\PipelineSimulation\\MipsPipelineUI",
+    "\\PipelineSimulation\\PipelineLibrary"
   ],
-  "SelectedNode": "\\PipelineSimulation\\PipelineLibrary\\Processor.cs",
+  "SelectedNode": "\\PipelineSimulation\\MipsPipelineUI\\SimulationForm.cs",
   "PreviewInSolutionExplorer": false
 }

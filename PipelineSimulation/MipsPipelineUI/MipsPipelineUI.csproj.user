@@ -1,6 +1,24 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="Current" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
+    <Compile Update="AboutControlForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="AboutInstructionsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="AboutRegistersForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="AboutStagesForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="ConfigClockForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Update="ConfigInstructionsForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
     <Compile Update="DirectInputForm.cs">
       <SubType>Form</SubType>
     </Compile>

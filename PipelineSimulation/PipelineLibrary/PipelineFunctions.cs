@@ -16,11 +16,36 @@ namespace PipelineLibrary {
                 return instruction;
             }
         }
-        public static void Decode() {
-
-        }
+        
         public static void Execute() {
 
+        }
+        public static (int,int) GetOperands(IInstruction instruction, Dictionary<RegisterEnum, int> registers) {
+            int operand1, operand2;
+
+
+            if (instruction is ITypeInstruction) {
+                ITypeInstruction i = (ITypeInstruction)instruction;
+                if (i.Opcode == OpcodeEnum.beq || i.Opcode == OpcodeEnum.bne) {
+                    operand1 = registers[i.SourceRegister1];
+                    operand2 = registers[i.DestinationRegister];
+                }
+                else if (i.Opcode == OpcodeEnum.lw || i.Opcode == OpcodeEnum.l_s) {
+                    operand1 = registers[i.SourceRegister1];
+                    operand2 = i.Immediate;
+                }
+                else {
+                    operand1 = registers[i.DestinationRegister];
+                    operand2 = i.Immediate;
+                }
+            }
+            else {
+                RTypeInstruction i = (RTypeInstruction)instruction;
+                operand1 = registers[i.SourceRegister1];
+                operand2 = registers[i.SourceRegister2];
+            }
+
+            return (operand1, operand2);
         }
 
         /// <summary>
