@@ -21,6 +21,9 @@ namespace MipsPipelineUI {
             MIPS_Processor = new Processor();
             ProcessorStateBox.Text = MIPS_Processor.ToString();
             InstructionTextBox.Text = "Instructions here";
+            PotentialHazardsTextBox.Text = $"No Potential Hazards Detected";
+            DetectedHazardsTextBox.Text = $"No Hazards Detected";
+            StatisticsTextBox.Text = $"No Stats Yet";
             IsRunning = false;
             cycleTimer.Interval = MIPS_Processor.ClockSpeed;
         }
@@ -57,7 +60,33 @@ namespace MipsPipelineUI {
                 runButton.Enabled = false;
                 System.Diagnostics.Debug.WriteLine("Done!");
             }
+            UpdateUI();
+        }
+
+        private void UpdateUI() {
             ProcessorStateBox.Text = MIPS_Processor.ToString();
+            if (MIPS_Processor.Hazards.HazardStall.Item2 is null) {
+                DetectedHazardsTextBox.Text = $"No Hazards Detected";
+            }
+            else {
+                DetectedHazardsTextBox.Text = $"HAZARD DETECTED -- {MIPS_Processor.Hazards.HazardStall.Item2.Instruction} -- {MIPS_Processor.Hazards.HazardStall.Item2.Register}";
+            }
+            if (MIPS_Processor.Hazards.CurrentHazards is null || MIPS_Processor.Hazards.CurrentHazards.Count == 0) {
+                PotentialHazardsTextBox.Text = $"No Potential Hazards Detected";
+            }
+            else {
+                string output = $"Potential Hazards - ";
+                if (MIPS_Processor.Hazards.CurrentHazards.Count == 1) {
+                    output += $"{MIPS_Processor.Hazards.CurrentHazards[0].Register}";
+                }
+                else {
+                    foreach (var item in MIPS_Processor.Hazards.CurrentHazards) {
+                        output += $"{item.Register}, ";
+                    }
+                }
+                PotentialHazardsTextBox.Text = output;
+            }
+            //StatisticsTextBox 
         }
 
         private void loadInstructions(string instructionstr) {
@@ -79,8 +108,7 @@ namespace MipsPipelineUI {
                 stepButton.Enabled = false;
                 runButton.Enabled = false;
             }
-
-            ProcessorStateBox.Text = MIPS_Processor.ToString();
+            UpdateUI();
         }
 
         private void compileProgramToolStripMenuItem_Click(object sender, EventArgs e) {

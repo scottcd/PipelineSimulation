@@ -98,18 +98,19 @@ namespace PipelineLibrary {
         }
 
         public int RunCycle() {
-            Pipeline[4] = null;
             CycleNumber++;
-            if (ExecutionCyclesLeft > 1) {
+            if (ExecutionCyclesLeft > 0) {
                 Execute();
             }
             else if (Hazards.HazardStall.Item1 is true) {
                 Hazard hazard = Hazards.HazardStall.Item2;
+                System.Diagnostics.Debug.WriteLine($"{Hazards.HazardStall.Item2.Stage} {Hazards.HazardStall.Item2.Instruction} ex{ExecutionCyclesLeft}");
                 // stall and either execute, mem, or regwrite
                 switch (Hazards.HazardStall.Item2.Stage) {
-                    case 2:
+                    case 1:
                         Execute();
                         break;
+                    case 2:
                     case 3:
                         if (hazard.ControlUnit.MemRead is true ||
                             hazard.ControlUnit.MemWrite is true) {
@@ -120,9 +121,10 @@ namespace PipelineLibrary {
                         }
                         break;
                     default:
-                        RegWrite();
+                        if (hazard.ControlUnit.RegWrite is true) {
+                            RegWrite();
+                        }
                         break;
-
                 }
             }
             else {
@@ -145,8 +147,7 @@ namespace PipelineLibrary {
                     EXMEM_PipelineRegister.FlushPipeline();
                 }
                 else {
-                    ExecutionCyclesLeft = -1;
-                    Execute();
+                   Execute();
                 }
                 if (IFID_PipelineRegister.Instruction is null) {
                     Pipeline[1] = null;
@@ -162,7 +163,7 @@ namespace PipelineLibrary {
             System.Diagnostics.Debug.WriteLine($"{CycleNumber}");
             System.Diagnostics.Debug.WriteLine($"Fetch:    \t{Pipeline[0]}");
             System.Diagnostics.Debug.WriteLine($"Decode:   \t{Pipeline[1]}");
-            System.Diagnostics.Debug.WriteLine($"Execute:  \t{Pipeline[2]} {EXMEM_PipelineRegister.ValueToWrite}");
+            System.Diagnostics.Debug.WriteLine($"Execute:  \t{Pipeline[2]}");
             System.Diagnostics.Debug.WriteLine($"MemAccess:\t{Pipeline[3]}");
             System.Diagnostics.Debug.WriteLine($"RegWrite: \t{Pipeline[4]}");
             System.Diagnostics.Debug.WriteLine("");
@@ -245,7 +246,7 @@ namespace PipelineLibrary {
             // read pipeline register
             IInstruction instruction = IDEX_PipelineRegister.Instruction; 
              ControlSignal controlUnit = IDEX_PipelineRegister.ControlLogic;
-            ExecutionCyclesLeft = ExecutionCycleDictionary[instruction.Opcode];
+            ExecutionCyclesLeft = ExecutionCycleDictionary[instruction.Opcode] - 1;
 
             // put instruction in execute stage
             Pipeline[2] = new PipelineStage(instruction);

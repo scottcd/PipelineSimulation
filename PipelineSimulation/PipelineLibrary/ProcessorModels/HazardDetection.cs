@@ -22,6 +22,11 @@ namespace PipelineLibrary {
             if (controlSignal.RegWrite is true) {
                 CurrentHazards.Add(new Hazard(instruction.DestinationRegister, 1, instruction, controlSignal));
             }
+            else if (controlSignal.MemWrite is true) {
+                ITypeInstruction i = (ITypeInstruction)instruction;
+                CurrentHazards.Add(new Hazard(i.SourceRegister1, 1, instruction, controlSignal));
+                // or if memory matches
+            }
         }
         public void CheckToRemoveHazard(IInstruction instruction, ControlSignal controlSignal) {
             if (controlSignal.RegWrite is true) {
@@ -47,6 +52,7 @@ namespace PipelineLibrary {
                     Hazard hazard = CurrentHazards.Where((x) => x.Register == StallRegister).First();
                     HazardStall = (true, hazard);
                 }
+                // or if memory matches
             }
             else {
                 RTypeInstruction i = (RTypeInstruction)instruction;
