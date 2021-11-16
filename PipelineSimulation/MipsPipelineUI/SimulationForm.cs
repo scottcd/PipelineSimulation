@@ -117,28 +117,31 @@ namespace MipsPipelineUI {
                 MEMREG_Value.Text = string.Empty;
             }
             else {
-                IFID_Instruction.Text = $"{MIPS_Processor.IFID_PipelineRegister.Instruction}";
+                IFID_Instruction.Text = $"{MIPS_Processor.PipelineRegisters[0].Instruction}";
 
-                IDEX_Instruction.Text = $"{MIPS_Processor.IDEX_PipelineRegister.Instruction}";
-                IDEX_Control.Text = $"{MIPS_Processor.IDEX_PipelineRegister.ControlLogic}";
+                ValuePipelineRegister reg1 = (ValuePipelineRegister)MIPS_Processor.PipelineRegisters[1];
+                IDEX_Instruction.Text = $"{reg1.Instruction}";
+                IDEX_Control.Text = $"{reg1.ControlLogic}";
 
-                EXMEM_Instruction.Text = $"{MIPS_Processor.EXMEM_PipelineRegister.Instruction}";
-                EXMEM_Control.Text = $"{MIPS_Processor.EXMEM_PipelineRegister.ControlLogic}";
-                if (MIPS_Processor.EXMEM_PipelineRegister.Instruction is null) {
+                FullPipelineRegister reg2 = (FullPipelineRegister)MIPS_Processor.PipelineRegisters[2];
+                EXMEM_Instruction.Text = $"{reg2.Instruction}";
+                EXMEM_Control.Text = $"{reg2.ControlLogic}";
+                if (reg2.Instruction is null) {
                     EXMEM_Value.Text = string.Empty;
                 }
                 else {
-                    EXMEM_Value.Text = $"{MIPS_Processor.EXMEM_PipelineRegister.ValueToWrite}";
+                    EXMEM_Value.Text = $"{reg2.ValueToWrite}";
                 }
+
+                FullPipelineRegister reg3 = (FullPipelineRegister)MIPS_Processor.PipelineRegisters[3];
+                MEMREG_Instruction.Text = $"{reg3.Instruction}";
+                MEMREG_Control.Text = $"{reg3.ControlLogic}";
                 
-                MEMREG_Instruction.Text = $"{MIPS_Processor.MEMREG_PipelineRegister.Instruction}";
-                MEMREG_Control.Text = $"{MIPS_Processor.MEMREG_PipelineRegister.ControlLogic}";
-                
-                if (MIPS_Processor.MEMREG_PipelineRegister.Instruction is null) {
+                if (reg3.Instruction is null) {
                     MEMREG_Value.Text = string.Empty;
                 }
                 else {
-                    MEMREG_Value.Text = $"{MIPS_Processor.MEMREG_PipelineRegister.ValueToWrite}";
+                    MEMREG_Value.Text = $"{reg3.ValueToWrite}";
                 }
             }
         }

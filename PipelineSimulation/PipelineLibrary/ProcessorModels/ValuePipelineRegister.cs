@@ -8,12 +8,16 @@ namespace PipelineLibrary {
     public class ValuePipelineRegister : IPipelineRegister {
         public IInstruction Instruction { get; set; }
         public ControlSignal ControlLogic { get; private set; }
+        public ITypeInstruction IType { get; set; }
         public int ValueToWrite { get; private set; }
 
         public void FillPipeline(IInstruction instruction, ControlSignal controlLogic, int valueToWrite) {
             Instruction = instruction;
             ControlLogic = controlLogic;
             ValueToWrite = valueToWrite;
+            if (instruction is ITypeInstruction) {
+                IType = (ITypeInstruction)instruction;
+            }
         }
         public void FlushPipeline() {
             Instruction = null;

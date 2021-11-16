@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PipelineLibrary.ProcessorModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -20,10 +21,33 @@ namespace PipelineLibrary {
         public static void Execute() {
 
         }
+
+        public static void WritePipeline(Processor mips) {
+            if (mips.ExecutionCyclesLeft == 0) {
+                if (mips.Instruction is RTypeInstruction) {
+                    FullPipelineRegister reg = (FullPipelineRegister)mips.PipelineRegisters[3];
+                    reg.FillPipeline(mips.Instruction, mips.ControlUnit, mips.ValueToWrite);
+                }
+                else if (mips.ExecutionCyclesLeft == 0) {
+                    FullPipelineRegister reg = (FullPipelineRegister)mips.PipelineRegisters[2];
+                    reg.FillPipeline(mips.Instruction, mips.ControlUnit, mips.ValueToWrite);
+                }
+            }
+        }
+
+        public static bool NullCheckPipelineRegisters(Processor mips) {
+            if (mips.PipelineRegisters[0].Instruction is null &&
+                mips.PipelineRegisters[1].Instruction is null &&
+                mips.PipelineRegisters[2].Instruction is null &&
+                mips.PipelineRegisters[3].Instruction is null) {
+                return true;
+            }
+            return false;
+        }
+
+
         public static (int,int) GetOperands(IInstruction instruction, Dictionary<RegisterEnum, int> registers) {
             int operand1, operand2;
-
-
             if (instruction is ITypeInstruction) {
                 ITypeInstruction i = (ITypeInstruction)instruction;
                 if (i.Opcode == OpcodeEnum.beq || i.Opcode == OpcodeEnum.bne) {
@@ -64,6 +88,33 @@ namespace PipelineLibrary {
                 return false;
             }
         }
+
+        public  static void MemoryTouch(IInstruction instruction, ControlSignal controlUnit, Processor mips) {
+            FullPipelineRegister reg = (FullPipelineRegister)mips.PipelineRegisters[2];
+            // load
+            if (controlUnit.MemRead == true) {
+                int readAddress = reg.ValueToWrite;
+
+                // read memory to valueToWrite
+                int valueRead = mips.MainMemory[readAddress];
+
+                // write pipeline register
+                FullPipelineRegister reg1 = (FullPipelineRegister)mips.PipelineRegisters[3];
+                reg1.FillPipeline(instruction, controlUnit, valueRead);
+                mips.Pipeline[3] = new MemoryPipelineStage(instruction, readAddress, valueRead);
+            }
+            // store
+            else if (controlUnit.MemWrite == true) {
+
+                int writeAddress = reg.ValueToWrite;
+                // write to memory
+                int valueToWrite = mips.Registers[reg.IType.SourceRegister1];
+                mips.Pipeline[3] = new MemoryPipelineStage(instruction, writeAddress, valueToWrite);
+                mips.MainMemory[writeAddress] = valueToWrite;
+                mips.Hazards.CheckToRemoveHazard(instruction, controlUnit);
+            }
+        }
+
         /// <summary>
         /// Check if instruction should be loaded into the Register Write stage
         /// </summary>

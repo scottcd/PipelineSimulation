@@ -9,16 +9,22 @@ namespace PipelineLibrary {
         public IInstruction Instruction { get; set; }
         public ControlSignal ControlLogic { get; private set; }
 
+        public ITypeInstruction IType { get; set; }
+        public int ValueToWrite { get; set; }
 
-        
-        public void FillPipeline(IInstruction instruction, ControlSignal controlLogic) {
+        public void FillPipeline(IInstruction instruction, ControlSignal controlLogic, int valueToWrite) {
             Instruction = instruction;
             ControlLogic = controlLogic;
+            ValueToWrite = valueToWrite;
 
+            if (instruction is ITypeInstruction) {
+                IType = (ITypeInstruction)instruction;
+            }
         }
         public void FlushPipeline() {
             Instruction = null;
             ControlLogic = null;
-       }
+            ValueToWrite = -1;
+        }
     }
 }
