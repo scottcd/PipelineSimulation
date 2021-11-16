@@ -1,15 +1,16 @@
-﻿using System;
+﻿using PipelineLibrary.ProcessorModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
 namespace PipelineLibrary {
-    public class PipelineStage {
+    public class BasePipelineStage :IPipelineStage {
         public IInstruction Instruction { get; set; }
         public int CyclesLeft { get; set; }
 
-        public PipelineStage(IInstruction instruction) {
+        public BasePipelineStage(IInstruction instruction) {
             Instruction = instruction;
         }
 

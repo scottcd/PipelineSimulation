@@ -33,6 +33,11 @@ namespace PipelineLibrary {
                 CurrentHazards.RemoveAll((x) => x.Register == instruction.DestinationRegister);
                 HazardStall = (false, null);
             }
+            if (controlSignal.MemWrite is true) {
+                ITypeInstruction i = (ITypeInstruction)instruction;
+                CurrentHazards.RemoveAll((x) => x.Register == i.SourceRegister1);
+                HazardStall = (false, null);
+            }
         }
 
         public int CheckForHazardMatch(IInstruction instruction, ControlSignal controlSignal) {

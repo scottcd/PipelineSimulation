@@ -72,7 +72,7 @@ namespace PipelineLibrary {
             Int32.TryParse(formattedInstruction[3], out int immediate);
             Immediate = immediate;
 
-            DisplayString = $"{Opcode}\t{DestinationRegister}, {SourceRegister1}, {Immediate}";
+            DisplayString = $"{Opcode}    {DestinationRegister}, {SourceRegister1}, {Immediate}";
         }
 
         public override string ToString() {

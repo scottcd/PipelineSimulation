@@ -115,5 +115,61 @@ namespace PipelineLibrary {
                     break;
             }
         }
+        public override string ToString() {
+            string output = string.Empty;
+
+            if (RegDst is true) {
+                output += $"RegDst:\tT \n";
+            }
+            else {
+                output += $"RegDst:\tF \n";
+
+            }
+            if (Branch is true) {
+                output += $"Branch:\tT \n";
+            }
+            else {
+                output += $"Branch:\tF \n";
+
+            }
+            if (MemRead is true) {
+                output += $"MemRead:\tT \n";
+            }
+            else {
+                output += $"MemRead:\tF \n";
+
+            }
+            if (MemtoReg is true) {
+                output += $"MemtoReg:\tT \n";
+            }
+            else {
+                output += $"MemtoReg:\tF \n";
+
+            }
+            if (MemWrite is true) {
+                output += $"MemWrite:\tT \n";
+            }
+            else {
+                output += $"MemWrite:\tF \n";
+
+            }
+            if (ALUSrc is true) {
+                output += $"ALUSrc:\tT \n";
+            }
+            else {
+                output += $"ALUSrc:\tF \n";
+
+            }
+            if (RegWrite is true) {
+                output += $"RegWrite:\tT \n";
+            }
+            else {
+                output += $"RegWrite:\tF \n";
+
+            }
+            output += $"ALU Op: {ALUOp}";
+
+            return output;
+        }
     }
 }
