@@ -219,10 +219,19 @@ namespace MipsPipelineUI {
                 }
                 else {
                     MemoryPipelineStage stage = (MemoryPipelineStage)MIPS_Processor.Pipeline[3];
+                    IInstruction i = stage.Instruction;
+
+                    if (i.Opcode == OpcodeEnum.sw || i.Opcode == OpcodeEnum.s_s) {
+                        ITypeInstruction instruction = (ITypeInstruction)i;
+                        Mem_Value.Text = $"Value: {MIPS_Processor.Registers[instruction.SourceRegister1]}";
+                    }
+                    else {
+                        Mem_Value.Text = $"Value: {MIPS_Processor.MainMemory[stage.MemoryAddress]}";
+                    }
 
                     Mem_Instruction.Text = $"{stage.Instruction}";
                     Mem_Address.Text = $"Memory Address: {stage.MemoryAddress}";
-                    Mem_Value.Text = $"Value: {stage.ValueToWrite}";
+                    
                 }
                 if (MIPS_Processor.Pipeline[4] is null) {
                     RegWrite_Instruction.Text = string.Empty;

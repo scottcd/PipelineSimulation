@@ -103,22 +103,27 @@ namespace PipelineLibrary {
         }
 
         public int RunCycle() {
+            
+
             CycleNumber++;
             Pipeline[3] = null;
             Pipeline[4] = null;
             if (ExecutionCyclesLeft > 0) {
                 Execute();
                 // finish stages with instructions -- memaccess & regwrite
+                
             }
             else if (Hazards.HazardStall.Item1 is true) {
                 Hazard hazard = Hazards.HazardStall.Item2;
                 // stall and either execute, mem, or regwrite
                 switch (Hazards.HazardStall.Item2.Stage) {
                     case 1:
+                        
                         Execute();
                         break;
                     case 2:
                     case 3:
+                        Pipeline[2] = null;
                         if (hazard.ControlUnit.MemRead is true ||
                             hazard.ControlUnit.MemWrite is true) {
                             MemAccess();
@@ -168,15 +173,25 @@ namespace PipelineLibrary {
             }
             if (ExecutionCyclesLeft == 0) {
                 Hazards.IncrementStage();
+                Pipeline[2] = null;
                 Statistics.WriteStatistic(Instruction, 2, CycleNumber);
             }
-            if (Pipeline.All((x) => x is null)) {
+            if (Pipeline.All((x) => x is null) && NullCheckPipelineRegisters() is true) {
                 return -1;
             }
 
             return 0;
         }
 
+        public bool NullCheckPipelineRegisters() {
+            if (IFID_PipelineRegister.Instruction is null &&
+                IDEX_PipelineRegister.Instruction is null &&
+                EXMEM_PipelineRegister.Instruction is null &&
+                MEMREG_PipelineRegister.Instruction is null ) {
+                return true;
+            }
+            return false;
+        }
         /// <summary>
         /// Compile the given instructions usint CompilerFunctions.cs
         /// </summary>
@@ -298,6 +313,7 @@ namespace PipelineLibrary {
             // read pipeline register
             IInstruction instruction = EXMEM_PipelineRegister.Instruction;
             ControlSignal controlUnit = EXMEM_PipelineRegister.ControlLogic;
+            
 
             if (controlUnit.RegWrite == true && controlUnit.MemRead == false) {
                 MEMREG_PipelineRegister.FillPipeline(instruction, controlUnit, EXMEM_PipelineRegister.ValueToWrite);
@@ -330,6 +346,7 @@ namespace PipelineLibrary {
                 Hazards.CheckToRemoveHazard(instruction, controlUnit);
             }
             Statistics.WriteStatistic(instruction, 3, CycleNumber);
+            EXMEM_PipelineRegister.FlushPipeline();
         }
 
         // regwrite

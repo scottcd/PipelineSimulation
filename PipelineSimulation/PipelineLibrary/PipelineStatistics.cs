@@ -34,7 +34,8 @@ namespace PipelineLibrary {
                 index = Stats.FindIndex(x => 
                     x.Item1.Equals(instruction) && 
                     x.Item2[stage - 1] > 0 && 
-                    x.Item2[4] == 0);
+                    x.Item2[4] == 0 &&
+                    x.Item2[stage] == 0);
                 if (index == -1) {
                     return;
                 }
