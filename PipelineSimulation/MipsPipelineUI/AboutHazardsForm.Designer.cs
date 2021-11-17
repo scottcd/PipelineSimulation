@@ -50,11 +50,12 @@ namespace MipsPipelineUI {
             this.HazardsBox.Name = "HazardsBox";
             this.HazardsBox.Size = new System.Drawing.Size(121, 23);
             this.HazardsBox.TabIndex = 4;
+            this.HazardsBox.SelectedValueChanged += new System.EventHandler(this.HazardsBox_SelectedValueChanged);
             // 
             // DescriptionLabel
             // 
             this.DescriptionLabel.AutoSize = true;
-            this.DescriptionLabel.Location = new System.Drawing.Point(37, 161);
+            this.DescriptionLabel.Location = new System.Drawing.Point(12, 161);
             this.DescriptionLabel.Name = "DescriptionLabel";
             this.DescriptionLabel.Size = new System.Drawing.Size(38, 15);
             this.DescriptionLabel.TabIndex = 11;
@@ -63,7 +64,7 @@ namespace MipsPipelineUI {
             // InstructionOneLabel
             // 
             this.InstructionOneLabel.AutoSize = true;
-            this.InstructionOneLabel.Location = new System.Drawing.Point(37, 87);
+            this.InstructionOneLabel.Location = new System.Drawing.Point(12, 87);
             this.InstructionOneLabel.Name = "InstructionOneLabel";
             this.InstructionOneLabel.Size = new System.Drawing.Size(38, 15);
             this.InstructionOneLabel.TabIndex = 10;
@@ -73,16 +74,16 @@ namespace MipsPipelineUI {
             // 
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label2.Location = new System.Drawing.Point(37, 62);
+            this.label2.Location = new System.Drawing.Point(12, 62);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(121, 21);
+            this.label2.Size = new System.Drawing.Size(124, 21);
             this.label2.TabIndex = 9;
-            this.label2.Text = "Example Syntax:";
+            this.label2.Text = "Example Hazard:";
             // 
             // InstructionTwoLabel
             // 
             this.InstructionTwoLabel.AutoSize = true;
-            this.InstructionTwoLabel.Location = new System.Drawing.Point(37, 102);
+            this.InstructionTwoLabel.Location = new System.Drawing.Point(12, 102);
             this.InstructionTwoLabel.Name = "InstructionTwoLabel";
             this.InstructionTwoLabel.Size = new System.Drawing.Size(38, 15);
             this.InstructionTwoLabel.TabIndex = 12;
@@ -92,7 +93,7 @@ namespace MipsPipelineUI {
             // 
             this.label3.AutoSize = true;
             this.label3.Font = new System.Drawing.Font("Segoe UI", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
-            this.label3.Location = new System.Drawing.Point(37, 140);
+            this.label3.Location = new System.Drawing.Point(12, 140);
             this.label3.Name = "label3";
             this.label3.Size = new System.Drawing.Size(92, 21);
             this.label3.TabIndex = 13;
@@ -102,7 +103,7 @@ namespace MipsPipelineUI {
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(384, 211);
+            this.ClientSize = new System.Drawing.Size(384, 263);
             this.Controls.Add(this.label3);
             this.Controls.Add(this.InstructionTwoLabel);
             this.Controls.Add(this.DescriptionLabel);

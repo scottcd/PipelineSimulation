@@ -23,28 +23,30 @@ namespace MipsPipelineUI {
 
         }
 
-        private void InstructionComboBox_SelectionChangeCommitted(object sender, EventArgs e) {
-            string key = (string)HazardsBox.SelectedItem;
-            GetDisplay(key);
-        }
         private void GetDisplay(string currentKey) {
             switch (currentKey) {
                 case "Data Hazard":
-                    InstructionOneLabel.Text = $"";
-                    InstructionTwoLabel.Text = $"";
-                    DescriptionLabel.Text = $"";
+                    InstructionOneLabel.Text = $"mul $1,$2,$3";
+                    InstructionTwoLabel.Text = $"add $8,$1,$7";
+                    DescriptionLabel.Text = $"Occurs when two instructions need the same register." +
+                        $"\nCan take three forms:\n    Read after Write\n    Write after Read\n    Write after Write";
                     break;
                 case "Memory Hazard":
-                    InstructionOneLabel.Text = $"";
-                    InstructionTwoLabel.Text = $"";
-                    DescriptionLabel.Text = $"";
+                    InstructionOneLabel.Text = $"sw $1,100($2)";
+                    InstructionTwoLabel.Text = $"lw $3,100($2)";
+                    DescriptionLabel.Text = $"Occurs when two instructions need the same address in memory.";
                     break;
                 case "Structural Hazard":
-                    InstructionOneLabel.Text = $"";
-                    InstructionTwoLabel.Text = $"";
-                    DescriptionLabel.Text = $"";
+                    InstructionOneLabel.Text = $"div.s $1,$2,$3";
+                    InstructionTwoLabel.Text = $"add $1,$2,$3";
+                    DescriptionLabel.Text = $"Occurs when two instructions need the same resource.";
                     break;
             }
+        }
+
+        private void HazardsBox_SelectedValueChanged(object sender, EventArgs e) {
+            string key = (string)HazardsBox.SelectedItem;
+            GetDisplay(key);
         }
     }
 }

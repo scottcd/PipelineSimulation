@@ -50,8 +50,6 @@ namespace PipelineLibrary {
             else {
                 RTypeConfiguration(instructionOpcode);
             }
-            
-
         }
 
         private void BranchConfiguration() {

@@ -89,6 +89,7 @@ namespace MipsPipelineUI {
             this.StatisticsTextBox = new System.Windows.Forms.RichTextBox();
             this.PotentialHazardsTextBox = new System.Windows.Forms.RichTextBox();
             this.DetectedHazardsTextBox = new System.Windows.Forms.RichTextBox();
+            this.ExecutionCyclesLabel = new System.Windows.Forms.Label();
             this.PipelinePanel.SuspendLayout();
             this.loadMenuStrip.SuspendLayout();
             this.SuspendLayout();
@@ -137,6 +138,7 @@ namespace MipsPipelineUI {
             // 
             // PipelinePanel
             // 
+            this.PipelinePanel.Controls.Add(this.ExecutionCyclesLabel);
             this.PipelinePanel.Controls.Add(this.Mem_Value);
             this.PipelinePanel.Controls.Add(this.RegWrite_WriteReg);
             this.PipelinePanel.Controls.Add(this.RegWrite_Value);
@@ -648,35 +650,35 @@ namespace MipsPipelineUI {
             // instructionsToolStripMenuItem
             // 
             this.instructionsToolStripMenuItem.Name = "instructionsToolStripMenuItem";
-            this.instructionsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.instructionsToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
             this.instructionsToolStripMenuItem.Text = "Instructions";
             this.instructionsToolStripMenuItem.Click += new System.EventHandler(this.instructionsToolStripMenuItem_Click);
             // 
             // registersToolStripMenuItem
             // 
             this.registersToolStripMenuItem.Name = "registersToolStripMenuItem";
-            this.registersToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.registersToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
             this.registersToolStripMenuItem.Text = "Registers";
             this.registersToolStripMenuItem.Click += new System.EventHandler(this.registersToolStripMenuItem_Click);
             // 
             // pipelineStagesToolStripMenuItem
             // 
             this.pipelineStagesToolStripMenuItem.Name = "pipelineStagesToolStripMenuItem";
-            this.pipelineStagesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.pipelineStagesToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
             this.pipelineStagesToolStripMenuItem.Text = "Pipeline Stages";
             this.pipelineStagesToolStripMenuItem.Click += new System.EventHandler(this.pipelineStagesToolStripMenuItem_Click);
             // 
             // controlUnitToolStripMenuItem
             // 
             this.controlUnitToolStripMenuItem.Name = "controlUnitToolStripMenuItem";
-            this.controlUnitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.controlUnitToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
             this.controlUnitToolStripMenuItem.Text = "Control Unit";
             this.controlUnitToolStripMenuItem.Click += new System.EventHandler(this.controlUnitToolStripMenuItem_Click);
             // 
             // hazardsToolStripMenuItem
             // 
             this.hazardsToolStripMenuItem.Name = "hazardsToolStripMenuItem";
-            this.hazardsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.hazardsToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
             this.hazardsToolStripMenuItem.Text = "Hazards";
             this.hazardsToolStripMenuItem.Click += new System.EventHandler(this.hazardsToolStripMenuItem_Click);
             // 
@@ -736,6 +738,15 @@ namespace MipsPipelineUI {
             this.DetectedHazardsTextBox.TabIndex = 9;
             this.DetectedHazardsTextBox.TabStop = false;
             this.DetectedHazardsTextBox.Text = "Some Text";
+            // 
+            // ExecutionCyclesLabel
+            // 
+            this.ExecutionCyclesLabel.AutoSize = true;
+            this.ExecutionCyclesLabel.Location = new System.Drawing.Point(382, 253);
+            this.ExecutionCyclesLabel.Name = "ExecutionCyclesLabel";
+            this.ExecutionCyclesLabel.Size = new System.Drawing.Size(39, 15);
+            this.ExecutionCyclesLabel.TabIndex = 38;
+            this.ExecutionCyclesLabel.Text = "cycles";
             // 
             // SimulationForm
             // 
@@ -832,6 +843,7 @@ namespace MipsPipelineUI {
         private System.Windows.Forms.Label Decode_Arg1;
         private System.Windows.Forms.Label Decode_Op;
         private System.Windows.Forms.ToolStripMenuItem hazardsToolStripMenuItem;
+        private System.Windows.Forms.Label ExecutionCyclesLabel;
     }
 }
 

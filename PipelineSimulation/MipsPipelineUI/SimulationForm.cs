@@ -28,6 +28,7 @@ namespace MipsPipelineUI {
             ProcessorStateBox.Text = $"No Processor Loaded";
             DisplayPipelineStages();
             DisplayPipelineRegisters();
+            ExecutionCyclesLabel.Text = string.Empty;
         }
 
         private void loadDirectInputMenuItem_Click(object sender, EventArgs e) {
@@ -74,6 +75,9 @@ namespace MipsPipelineUI {
             
             // display stats
             StatisticsTextBox.Text = $"{MIPS_Processor.Statistics}";
+
+            
+            
 
             // display hazards
             DisplayDetectedHazards();
@@ -245,6 +249,12 @@ namespace MipsPipelineUI {
                     Execute_Operation.Text = $"Operation: {stage.OperationCode}";
                     Execute_Value1.Text = $"Operand 1: {stage.Operand1}";
                     Execute_Value2.Text = $"Operand 2: {stage.Operand2}";
+                    if (MIPS_Processor.ExecutionCyclesLeft > 0) {
+                        ExecutionCyclesLabel.Text = $"Execution Cycles Left: {MIPS_Processor.ExecutionCyclesLeft}";
+                    }
+                    else {
+                        ExecutionCyclesLabel.Text = string.Empty;
+                    }
                 }
                 if (MIPS_Processor.Pipeline[3] is null) {
                     Mem_Instruction.Text = string.Empty;
