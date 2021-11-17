@@ -1,4 +1,5 @@
-﻿using System;
+﻿using PipelineLibrary.ProcessorModels;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -6,89 +7,117 @@ using System.Threading.Tasks;
 
 namespace PipelineLibrary {
     public class HazardDetection {
-        public List<Hazard> CurrentHazards { get; set; }
-        public (bool, Hazard) HazardStall { get; private set; }
+        public List<DataHazard> DataHazards { get; set; }
+        public List<MemoryHazard> MemoryHazards { get; set; }
+        public (bool, IHazard) HazardStall { get; private set; }
         public int PipelineStage {
             get { return HazardStall.Item2.Stage; }
             private set { }
         }
 
         public HazardDetection() {
-            CurrentHazards = new List<Hazard>();
+            DataHazards = new List<DataHazard>();
+            MemoryHazards = new List<MemoryHazard>();
             HazardStall = (false, null);
         }
 
-        public void CheckToAddHazard(IInstruction instruction, ControlSignal controlSignal) {
+        public void CheckToAddHazards(IInstruction instruction, ControlSignal controlSignal, Processor mips) {
             if (controlSignal.RegWrite is true) {
-                CurrentHazards.Add(new Hazard(instruction.DestinationRegister, 1, instruction, controlSignal));
+                DataHazards.Add(new DataHazard(instruction.DestinationRegister, 1, instruction, controlSignal));
             }
             else if (controlSignal.MemWrite is true) {
                 ITypeInstruction i = (ITypeInstruction)instruction;
-                CurrentHazards.Add(new Hazard(i.SourceRegister1, 1, instruction, controlSignal));
-                // or if memory matches
+                int address = i.Immediate + mips.Registers[i.DestinationRegister];
+                MemoryHazards.Add(new MemoryHazard(address, 1, instruction, controlSignal));
             }
         }
-        public void CheckToRemoveHazard(IInstruction instruction, ControlSignal controlSignal) {
+        public void CheckToRemoveHazard(IInstruction instruction, ControlSignal controlSignal, Processor mips) {
             if (controlSignal.RegWrite is true) {
-                CurrentHazards.RemoveAll((x) => x.Register == instruction.DestinationRegister);
+                DataHazards.RemoveAll((x) => x.Register == instruction.DestinationRegister);
                 HazardStall = (false, null);
             }
             if (controlSignal.MemWrite is true) {
                 ITypeInstruction i = (ITypeInstruction)instruction;
-                CurrentHazards.RemoveAll((x) => x.Register == i.SourceRegister1);
+                int address = i.Immediate + mips.Registers[i.DestinationRegister];
+                MemoryHazards.RemoveAll((x) => x.MemoryAddress == address);
                 HazardStall = (false, null);
             }
         }
 
-        public int CheckForHazardMatch(IInstruction instruction, ControlSignal controlSignal) {
+        /// <summary>
+        /// Checks the List of potential data hazards for a match and stalls if found
+        /// </summary>
+        /// <param name="instruction">instruction being checked</param>
+        /// <param name="controlSignal">instruction's control signal</param>
+        public void CheckForDataHazardMatch(IInstruction instruction, ControlSignal controlSignal) {
             if (instruction is null || controlSignal.RegWrite is false) {
-                return -1;
+                return;
             }
             else if (instruction is ITypeInstruction) {
                 ITypeInstruction i = (ITypeInstruction)instruction;
-                if (CurrentHazards.Any((x) => x.Register == i.DestinationRegister) is true) {
+                
+                if (DataHazards.Any((x) => x.Register == i.DestinationRegister) is true) {
                     RegisterEnum StallRegister = i.DestinationRegister;
                     
-                    Hazard hazard = CurrentHazards.Where((x) => x.Register == StallRegister).First();
+                    DataHazard hazard = DataHazards.Where((x) => x.Register == StallRegister).First();
                     HazardStall = (true, hazard);
                 }
-                else if (CurrentHazards.Any((x) => x.Register == i.SourceRegister1) is true) {
+                else if (DataHazards.Any((x) => x.Register == i.SourceRegister1) is true) {
                     RegisterEnum StallRegister = i.SourceRegister1;
-                    Hazard hazard = CurrentHazards.Where((x) => x.Register == StallRegister).First();
+                    DataHazard hazard = DataHazards.Where((x) => x.Register == StallRegister).First();
                     HazardStall = (true, hazard);
                 }
-                // or if memory matches
             }
             else {
                 RTypeInstruction i = (RTypeInstruction)instruction;
-                if (CurrentHazards.Any((x) => x.Register == instruction.DestinationRegister) is true) {
+                if (DataHazards.Any((x) => x.Register == instruction.DestinationRegister) is true) {
                     RegisterEnum StallRegister = i.DestinationRegister;
-                    Hazard hazard = CurrentHazards.Where((x) => x.Register == StallRegister).First();
+                    DataHazard hazard = DataHazards.Where((x) => x.Register == StallRegister).First();
                     HazardStall = (true, hazard);
                 }
-                else if (CurrentHazards.Any((x) => x.Register == i.SourceRegister1) is true) {
+                else if (DataHazards.Any((x) => x.Register == i.SourceRegister1) is true) {
                     RegisterEnum StallRegister = i.SourceRegister1;
-                    Hazard hazard = CurrentHazards.Where((x) => x.Register == StallRegister).First();
+                    DataHazard hazard = DataHazards.Where((x) => x.Register == StallRegister).First();
                     HazardStall = (true, hazard);
                 }
-                else if (CurrentHazards.Any((x) => x.Register == i.SourceRegister2) is true) {
+                else if (DataHazards.Any((x) => x.Register == i.SourceRegister2) is true) {
                     RegisterEnum StallRegister = i.SourceRegister2;
-                    Hazard hazard = CurrentHazards.Where((x) => x.Register == StallRegister).First();
+                    DataHazard hazard = DataHazards.Where((x) => x.Register == StallRegister).First();
                     HazardStall = (true, hazard);
                 }
             }
-            return -1;
+            return;
         }
 
+        /// <summary>
+        /// Checks the list of potential memory hazards for a match and stalls if found
+        /// </summary>
+        /// <param name="instruction">instruction being checked</param>
+        /// <param name="controlSignal">instruction's control signal</param>
+        /// <param name="mips">processor</param>
+        public void CheckForMemoryHazardMatch(IInstruction instruction, ControlSignal controlSignal, Processor mips) {
+            if (instruction is null || (controlSignal.MemWrite is false && controlSignal.MemRead is false)) {
+                return;
+            }
+            ITypeInstruction i = (ITypeInstruction)instruction;
+            int address = i.Immediate + mips.Registers[i.DestinationRegister];
+            int index = MemoryHazards.FindIndex((x) => x.MemoryAddress == address);
+            if (index == -1) {
+                return;
+            }
+            MemoryHazard hazard = MemoryHazards[index];
+            HazardStall = (true, hazard);
+        }
+
+        /// <summary>
+        /// Increment the pipeline stage of the hazard
+        /// </summary>
         public void IncrementStage() {
-            foreach (var item in CurrentHazards) {
+            foreach (var item in DataHazards) {
                 item.Stage++;
             }
-        }
-        public void IncrementStage(Hazard hazard) {
-            int index = CurrentHazards.FindIndex((x) => x == hazard);
-            if (index!=-1) {
-                CurrentHazards[index].Stage++;
+            foreach (var item in MemoryHazards) {
+                item.Stage++;
             }
         }
     }

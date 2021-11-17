@@ -27,3 +27,4 @@ C:\Users\Chandler\Source\Repos\PipelineSimulation\PipelineSimulation\MipsPipelin
 C:\Users\Chandler\Source\Repos\PipelineSimulation\PipelineSimulation\MipsPipelineUI\obj\Debug\net5.0-windows\MipsPipelineUI.AboutStagesForm.resources
 C:\Users\Chandler\Source\Repos\PipelineSimulation\PipelineSimulation\MipsPipelineUI\obj\Debug\net5.0-windows\MipsPipelineUI.ConfigClockForm.resources
 C:\Users\Chandler\Source\Repos\PipelineSimulation\PipelineSimulation\MipsPipelineUI\obj\Debug\net5.0-windows\MipsPipelineUI.ConfigInstructionsForm.resources
+C:\Users\Chandler\Source\Repos\PipelineSimulation\PipelineSimulation\MipsPipelineUI\obj\Debug\net5.0-windows\MipsPipelineUI.AboutHazardsForm.resources

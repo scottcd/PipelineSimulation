@@ -24,5 +24,8 @@ namespace PipelineLibrary {
             ControlLogic = null;
             ValueToWrite = -1;
         }
+        public override string ToString() {
+            return "Instruction/Control Logic/Value";
+        }
     }
 }

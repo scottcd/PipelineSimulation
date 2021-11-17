@@ -4,16 +4,15 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PipelineLibrary {
-    public class Hazard {
-        public RegisterEnum Register { get; set; }
+namespace PipelineLibrary.ProcessorModels {
+    public class MemoryHazard : IHazard {
         public IInstruction Instruction { get; set; }
         public ControlSignal ControlUnit { get; set; }
         public int Stage { get; set; }
-        public delegate string RegisterDelegate(RegisterEnum myreg);
+        public int MemoryAddress { get; set; }
 
-        public Hazard(RegisterEnum register, int stage, IInstruction instruction, ControlSignal controlSignal) {
-            Register = register;
+        public MemoryHazard(int memoryAddress, int stage, IInstruction instruction, ControlSignal controlSignal) {
+            MemoryAddress = memoryAddress;
             Stage = stage;
             Instruction = instruction;
             ControlUnit = controlSignal;

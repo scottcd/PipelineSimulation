@@ -68,36 +68,67 @@ namespace MipsPipelineUI {
         private void UpdateUI() {
             // display state
             ProcessorStateBox.Text = MIPS_Processor.ToString();
+            
+            // display clock
             ClockCycleLabel.Text = $"Current Cycle: {MIPS_Processor.CycleNumber}";
+            
+            // display stats
             StatisticsTextBox.Text = $"{MIPS_Processor.Statistics}";
 
-            // hazards conditional display
+            // display hazards
+            DisplayDetectedHazards();
+            DisplayPotentialHazards();
+            
+            // display pipeline
+            DisplayPipelineRegisters();
+            DisplayPipelineStages();
+        }
+
+        private void DisplayPotentialHazards() {
+            if (MIPS_Processor.Hazards.DataHazards is null || MIPS_Processor.Hazards.DataHazards.Count == 0) {
+                PotentialHazardsTextBox.Text = $"No Potential Hazards Detected";
+            }
+            else {
+                string output = $"Potential Hazards\n";
+                if (MIPS_Processor.Hazards.DataHazards.Count > 0) {
+                    output += $"Data Hazards: ";
+                    foreach (var item in MIPS_Processor.Hazards.DataHazards) {
+                        DataHazard i = item;
+                        output += $"{i.Register} ";
+                    }
+                    output += "\n";
+                }
+                if (MIPS_Processor.Hazards.MemoryHazards.Count > 0) {
+                    output += $"Memory Hazards: ";
+                    foreach (var item in MIPS_Processor.Hazards.MemoryHazards) {
+                        MemoryHazard i = item;
+                        output += $"{i.MemoryAddress} ";
+                    }
+                    output += "\n";
+                }
+                PotentialHazardsTextBox.Text = output;
+            }
+        }
+
+        private void DisplayDetectedHazards() {
             if (MIPS_Processor.Hazards.HazardStall.Item2 is null) {
                 DetectedHazardsTextBox.Text = $"No Hazards Detected";
             }
             else {
-                DetectedHazardsTextBox.Text = $"HAZARD DETECTED -- {MIPS_Processor.Hazards.HazardStall.Item2.Instruction} -- {MIPS_Processor.Hazards.HazardStall.Item2.Register}";
-            }
-            if (MIPS_Processor.Hazards.CurrentHazards is null || MIPS_Processor.Hazards.CurrentHazards.Count == 0) {
-                PotentialHazardsTextBox.Text = $"No Potential Hazards Detected";
-            }
-            else {
-                string output = $"Potential Hazards - ";
-                if (MIPS_Processor.Hazards.CurrentHazards.Count == 1) {
-                    output += $"{MIPS_Processor.Hazards.CurrentHazards[0].Register}";
-                }
-                else {
-                    foreach (var item in MIPS_Processor.Hazards.CurrentHazards) {
-                        output += $"{item.Register}, ";
-                    }
-                }
-                PotentialHazardsTextBox.Text = output;
-            }
-            // display stats
-            
+                string output = $"HAZARD DETECTED\n";
 
-            DisplayPipelineRegisters();
-            DisplayPipelineStages();
+                IHazard hazard = MIPS_Processor.Hazards.HazardStall.Item2;
+                output += $"{MIPS_Processor.Hazards.HazardStall.Item2.Instruction}\n";
+                if (hazard is DataHazard) {
+                    DataHazard dHazard = (DataHazard)hazard;
+                    output += $"register: {dHazard.Register}";
+                }
+                else if (hazard is MemoryHazard) {
+                    MemoryHazard mHazard = (MemoryHazard)hazard;
+                    output += $"address: {mHazard.MemoryAddress}";
+                }
+                DetectedHazardsTextBox.Text = output;
+            }
         }
 
         private void DisplayPipelineRegisters() {
@@ -251,7 +282,6 @@ namespace MipsPipelineUI {
             }
         }
 
-
         private void loadInstructions(string instructionstr) {
             stepButton.Enabled = false;
             runButton.Enabled = false;
@@ -284,6 +314,9 @@ namespace MipsPipelineUI {
         }
 
         private void compileProgramToolStripMenuItem_Click(object sender, EventArgs e) {
+            if (LoadedInstructions is null) {
+                return;
+            }
             // compile LoadedInstructions
             string output = MIPS_Processor.Compile(LoadedInstructions);
 
@@ -325,22 +358,27 @@ namespace MipsPipelineUI {
         }
 
         private void instructionsToolStripMenuItem_Click(object sender, EventArgs e) {
-            AboutInstructionsForm inputForm = new AboutInstructionsForm();
+            AboutInstructionsForm inputForm = new AboutInstructionsForm(MIPS_Processor);
             inputForm.ShowDialog();
         }
 
         private void registersToolStripMenuItem_Click(object sender, EventArgs e) {
-            AboutRegistersForm inputForm = new AboutRegistersForm();
+            AboutRegistersForm inputForm = new AboutRegistersForm(MIPS_Processor);
             inputForm.ShowDialog();
         }
 
         private void pipelineStagesToolStripMenuItem_Click(object sender, EventArgs e) {
-            AboutStagesForm inputForm = new AboutStagesForm();
+            AboutStagesForm inputForm = new AboutStagesForm(MIPS_Processor);
             inputForm.ShowDialog();
         }
 
         private void controlUnitToolStripMenuItem_Click(object sender, EventArgs e) {
             AboutControlForm inputForm = new AboutControlForm();
+            inputForm.ShowDialog();
+        }
+
+        private void hazardsToolStripMenuItem_Click(object sender, EventArgs e) {
+            AboutHazardsForm inputForm = new AboutHazardsForm();
             inputForm.ShowDialog();
         }
     }

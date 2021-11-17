@@ -27,7 +27,8 @@ namespace PipelineLibrary {
                         throw new NotSupportedException();
                     }
                     else {
-                        instructionMemory.Add(new RTypeInstruction(formattedInstruction));  
+                        instructionMemory.Add(new RTypeInstruction(formattedInstruction));
+                        System.Diagnostics.Debug.WriteLine(formattedInstruction);
                     }                   
                 }
                 else {

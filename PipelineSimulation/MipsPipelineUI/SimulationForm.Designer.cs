@@ -648,36 +648,37 @@ namespace MipsPipelineUI {
             // instructionsToolStripMenuItem
             // 
             this.instructionsToolStripMenuItem.Name = "instructionsToolStripMenuItem";
-            this.instructionsToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.instructionsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.instructionsToolStripMenuItem.Text = "Instructions";
             this.instructionsToolStripMenuItem.Click += new System.EventHandler(this.instructionsToolStripMenuItem_Click);
             // 
             // registersToolStripMenuItem
             // 
             this.registersToolStripMenuItem.Name = "registersToolStripMenuItem";
-            this.registersToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.registersToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.registersToolStripMenuItem.Text = "Registers";
             this.registersToolStripMenuItem.Click += new System.EventHandler(this.registersToolStripMenuItem_Click);
             // 
             // pipelineStagesToolStripMenuItem
             // 
             this.pipelineStagesToolStripMenuItem.Name = "pipelineStagesToolStripMenuItem";
-            this.pipelineStagesToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.pipelineStagesToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.pipelineStagesToolStripMenuItem.Text = "Pipeline Stages";
             this.pipelineStagesToolStripMenuItem.Click += new System.EventHandler(this.pipelineStagesToolStripMenuItem_Click);
             // 
             // controlUnitToolStripMenuItem
             // 
             this.controlUnitToolStripMenuItem.Name = "controlUnitToolStripMenuItem";
-            this.controlUnitToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.controlUnitToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.controlUnitToolStripMenuItem.Text = "Control Unit";
             this.controlUnitToolStripMenuItem.Click += new System.EventHandler(this.controlUnitToolStripMenuItem_Click);
             // 
             // hazardsToolStripMenuItem
             // 
             this.hazardsToolStripMenuItem.Name = "hazardsToolStripMenuItem";
-            this.hazardsToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
+            this.hazardsToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
             this.hazardsToolStripMenuItem.Text = "Hazards";
+            this.hazardsToolStripMenuItem.Click += new System.EventHandler(this.hazardsToolStripMenuItem_Click);
             // 
             // openDialog
             // 

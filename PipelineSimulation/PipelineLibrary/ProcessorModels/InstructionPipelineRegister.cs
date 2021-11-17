@@ -16,5 +16,8 @@ namespace PipelineLibrary {
         public void FlushPipeline() {
             Instruction = null;
         }
+        public override string ToString() {
+            return "Instruction";
+        }
     }
 }

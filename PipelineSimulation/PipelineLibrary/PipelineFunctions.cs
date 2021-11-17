@@ -111,7 +111,7 @@ namespace PipelineLibrary {
                 int valueToWrite = mips.Registers[reg.IType.SourceRegister1];
                 mips.Pipeline[3] = new MemoryPipelineStage(instruction, writeAddress, valueToWrite);
                 mips.MainMemory[writeAddress] = valueToWrite;
-                mips.Hazards.CheckToRemoveHazard(instruction, controlUnit);
+                mips.Hazards.CheckToRemoveHazard(instruction, controlUnit, mips);
             }
         }
 

@@ -4,9 +4,10 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace PipelineLibrary {
-    public interface IPipelineStage{
+namespace PipelineLibrary.ProcessorModels {
+    public interface IHazard {
         public IInstruction Instruction { get; set; }
+        public ControlSignal ControlUnit { get; set; }
+        public int Stage { get; set; }
     }
-
 }

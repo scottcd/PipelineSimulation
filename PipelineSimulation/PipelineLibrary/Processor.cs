@@ -109,7 +109,7 @@ namespace PipelineLibrary {
                 
             }
             else if (Hazards.HazardStall.Item1 is true) {
-                Hazard hazard = Hazards.HazardStall.Item2;
+                IHazard hazard = Hazards.HazardStall.Item2;
                 // stall and either execute, mem, or regwrite
                 switch (Hazards.HazardStall.Item2.Stage) {
                     case 1:
@@ -117,6 +117,7 @@ namespace PipelineLibrary {
                         break;
                     case 2:
                     case 3:
+                    case 4:
                         Pipeline[2] = null;
                         if (hazard.ControlUnit.MemRead is true ||
                             hazard.ControlUnit.MemWrite is true) {
@@ -171,8 +172,8 @@ namespace PipelineLibrary {
             }
             if (ExecutionCyclesLeft == 0) {
                 Hazards.IncrementStage();
-                Pipeline[2] = null;
                 Statistics.WriteStatistic(Instruction, 2, CycleNumber);
+                
             }
             if (Pipeline.All((x) => x is null) && PipelineFunctions.NullCheckPipelineRegisters(this) is true) {
                 return -1;
@@ -241,8 +242,9 @@ namespace PipelineLibrary {
             reg.FillPipeline(instruction, controlUnit, 0);
             
             Statistics.WriteStatistic(instruction, 1, CycleNumber);
-            Hazards.CheckForHazardMatch(instruction, controlUnit);
-            Hazards.CheckToAddHazard(instruction, controlUnit);
+            Hazards.CheckForDataHazardMatch(instruction, controlUnit);
+            Hazards.CheckForMemoryHazardMatch(instruction, controlUnit, this);
+            Hazards.CheckToAddHazards(instruction, controlUnit, this);
         }
 
         // execute
@@ -266,20 +268,21 @@ namespace PipelineLibrary {
             PipelineFunctions.WritePipeline(this);
 
             if (ControlUnit.Branch == true) {
-                ValuePipelineRegister ex = (ValuePipelineRegister)PipelineRegisters[1];
                 ITypeInstruction i = (ITypeInstruction)Instruction;
                 if (Instruction.Opcode == OpcodeEnum.beq) {
                     if (ValueToWrite == 0) {
                         Registers[RegisterEnum.r28] = BranchALU.AddOperands(Registers[RegisterEnum.r28], i.Immediate) - 8;
                         Pipeline[1] = null;
-                        ex.FlushPipeline();
+                        PipelineRegisters[0].FlushPipeline();
+                        PipelineRegisters[1].FlushPipeline();
                     }
                 }
                 else if (Instruction.Opcode == OpcodeEnum.bne) {
                     if (ValueToWrite != 0) {
                         Registers[RegisterEnum.r28] = BranchALU.AddOperands(Registers[RegisterEnum.r28], i.Immediate) - 8;
                         Pipeline[1] = null;
-                        ex.FlushPipeline();
+                        PipelineRegisters[0].FlushPipeline();
+                        PipelineRegisters[1].FlushPipeline();
                     }
                 }
             }   
@@ -319,7 +322,7 @@ namespace PipelineLibrary {
 
             Pipeline[4] = new RegisterPipelineStage(instruction, destinationRegister, reg.ValueToWrite);
             Statistics.WriteStatistic(instruction, 4, CycleNumber);
-            Hazards.CheckToRemoveHazard(instruction, controlUnit);
+            Hazards.CheckToRemoveHazard(instruction, controlUnit, this);
             reg.FlushPipeline();
         }
 
