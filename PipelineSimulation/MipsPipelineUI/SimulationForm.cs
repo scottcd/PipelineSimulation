@@ -22,11 +22,10 @@ namespace MipsPipelineUI {
             InitializeComponent();
             ClockSpeed = 1500;
             InstructionTextBox.Text = "Empty Instruction Memory";
-            PotentialHazardsTextBox.Text = $"No Potential Hazards Detected";
-            DetectedHazardsTextBox.Text = $"No Hazards Detected";
-            StatisticsTextBox.Text = $"No Stats Yet";
-            ProcessorStateBox.Text = $"No Processor Loaded";
-            DisplayPipelineStages();
+            PotentialHazardsTextBox.Text = "No Potential Hazards Detected";
+            DetectedHazardsTextBox.Text = "No Hazards Detected";
+            StatisticsTextBox.Text = "No Stats Yet";
+            ProcessorStateBox.Text = "No Processor Loaded";
             DisplayPipelineRegisters();
             ExecutionCyclesLabel.Text = string.Empty;
         }
@@ -183,29 +182,12 @@ namespace MipsPipelineUI {
 
         private void DisplayPipelineStages() {
             // display pipeline stages
+            
             if (MIPS_Processor is null) {
-                Fetch_Instruction.Text = string.Empty;
-                
-                Decode_Instruction.Text = string.Empty;
-                Decode_Op.Text = string.Empty;
-                Decode_Arg1.Text = string.Empty;
-                Decode_Arg2.Text = string.Empty;
-                Decode_Arg3.Text = string.Empty;
 
-                Execute_Instruction.Text = string.Empty;
-                Execute_Operation.Text = string.Empty;
-                Execute_Value1.Text = string.Empty;
-                Execute_Value2.Text = string.Empty;
-
-                Mem_Instruction.Text = string.Empty;
-                Mem_Address.Text = string.Empty;
-                Mem_Value.Text = string.Empty;
-
-                RegWrite_Instruction.Text = string.Empty;
-                RegWrite_WriteReg.Text = string.Empty;
-                RegWrite_Value.Text = string.Empty;
             }
             else {
+            
                 if (MIPS_Processor.Pipeline[0] is null) {
                     Fetch_Instruction.Text = string.Empty;
                 }
@@ -311,6 +293,7 @@ namespace MipsPipelineUI {
             IsRunning = false;
             cycleTimer.Interval = MIPS_Processor.ClockSpeed;
             UpdateUI();
+            compileCode();
         }
 
         private void stepButton_Click(object sender, EventArgs e) {
@@ -323,27 +306,25 @@ namespace MipsPipelineUI {
             UpdateUI();
         }
 
-        private void compileProgramToolStripMenuItem_Click(object sender, EventArgs e) {
-            if (LoadedInstructions is null) {
-                return;
-            }
-            // compile LoadedInstructions
+        private void compileCode() {
             string output = MIPS_Processor.Compile(LoadedInstructions);
 
             foreach (var instruction in MIPS_Processor.InstructionMemory) {
                 output += instruction + "\n";
             }
+
             stepButton.Enabled = true;
             runButton.Enabled = true;
             InstructionTextBox.Text = output;
         }
 
-        private void toolStripMenuItem1_Click(object sender, EventArgs e) {
+        private void loadFileMenuItem_Click(object sender, EventArgs e) {
             openDialog.InitialDirectory = Application.StartupPath;
             if (openDialog.ShowDialog() == DialogResult.OK && !openDialog.FileName.Equals("")) {
                 StreamReader sr = new StreamReader(openDialog.FileName);
                 loadInstructions(sr.ReadToEnd());
                 sr.Close();
+                compileCode();
             }
         }
 
