@@ -348,29 +348,9 @@ namespace MipsPipelineUI {
             }    
         }
 
-        private void instructionsToolStripMenuItem_Click(object sender, EventArgs e) {
-            AboutInstructionsForm inputForm = new AboutInstructionsForm(MIPS_Processor);
-            inputForm.ShowDialog();
-        }
-
-        private void registersToolStripMenuItem_Click(object sender, EventArgs e) {
-            AboutRegistersForm inputForm = new AboutRegistersForm(MIPS_Processor);
-            inputForm.ShowDialog();
-        }
-
-        private void pipelineStagesToolStripMenuItem_Click(object sender, EventArgs e) {
-            AboutStagesForm inputForm = new AboutStagesForm(MIPS_Processor);
-            inputForm.ShowDialog();
-        }
-
-        private void controlUnitToolStripMenuItem_Click(object sender, EventArgs e) {
-            AboutControlForm inputForm = new AboutControlForm();
-            inputForm.ShowDialog();
-        }
-
-        private void hazardsToolStripMenuItem_Click(object sender, EventArgs e) {
-            AboutHazardsForm inputForm = new AboutHazardsForm();
-            inputForm.ShowDialog();
+        private void aboutToolStripMenuItem_Click(object sender, EventArgs e) {
+            AboutForm about = new AboutForm();
+            about.ShowDialog();
         }
     }
 }

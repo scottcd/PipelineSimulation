@@ -80,11 +80,6 @@ namespace MipsPipelineUI {
             this.instructionLatenciesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.clockSpeedToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.aboutToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.instructionsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.registersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.pipelineStagesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.controlUnitToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.hazardsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openDialog = new System.Windows.Forms.OpenFileDialog();
             this.ProcessorStateBox = new System.Windows.Forms.RichTextBox();
             this.StatisticsTextBox = new System.Windows.Forms.RichTextBox();
@@ -632,50 +627,10 @@ namespace MipsPipelineUI {
             // 
             // aboutToolStripMenuItem
             // 
-            this.aboutToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.instructionsToolStripMenuItem,
-            this.registersToolStripMenuItem,
-            this.pipelineStagesToolStripMenuItem,
-            this.controlUnitToolStripMenuItem,
-            this.hazardsToolStripMenuItem});
             this.aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
             this.aboutToolStripMenuItem.Size = new System.Drawing.Size(52, 20);
             this.aboutToolStripMenuItem.Text = "About";
-            // 
-            // instructionsToolStripMenuItem
-            // 
-            this.instructionsToolStripMenuItem.Name = "instructionsToolStripMenuItem";
-            this.instructionsToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
-            this.instructionsToolStripMenuItem.Text = "Instructions";
-            this.instructionsToolStripMenuItem.Click += new System.EventHandler(this.instructionsToolStripMenuItem_Click);
-            // 
-            // registersToolStripMenuItem
-            // 
-            this.registersToolStripMenuItem.Name = "registersToolStripMenuItem";
-            this.registersToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
-            this.registersToolStripMenuItem.Text = "Registers";
-            this.registersToolStripMenuItem.Click += new System.EventHandler(this.registersToolStripMenuItem_Click);
-            // 
-            // pipelineStagesToolStripMenuItem
-            // 
-            this.pipelineStagesToolStripMenuItem.Name = "pipelineStagesToolStripMenuItem";
-            this.pipelineStagesToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
-            this.pipelineStagesToolStripMenuItem.Text = "Pipeline Stages";
-            this.pipelineStagesToolStripMenuItem.Click += new System.EventHandler(this.pipelineStagesToolStripMenuItem_Click);
-            // 
-            // controlUnitToolStripMenuItem
-            // 
-            this.controlUnitToolStripMenuItem.Name = "controlUnitToolStripMenuItem";
-            this.controlUnitToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
-            this.controlUnitToolStripMenuItem.Text = "Control Unit";
-            this.controlUnitToolStripMenuItem.Click += new System.EventHandler(this.controlUnitToolStripMenuItem_Click);
-            // 
-            // hazardsToolStripMenuItem
-            // 
-            this.hazardsToolStripMenuItem.Name = "hazardsToolStripMenuItem";
-            this.hazardsToolStripMenuItem.Size = new System.Drawing.Size(153, 22);
-            this.hazardsToolStripMenuItem.Text = "Hazards";
-            this.hazardsToolStripMenuItem.Click += new System.EventHandler(this.hazardsToolStripMenuItem_Click);
+            this.aboutToolStripMenuItem.Click += new System.EventHandler(this.aboutToolStripMenuItem_Click);
             // 
             // openDialog
             // 
@@ -785,10 +740,6 @@ namespace MipsPipelineUI {
         private System.Windows.Forms.ToolStripMenuItem instructionLatenciesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem clockSpeedToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem aboutToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem instructionsToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem registersToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem pipelineStagesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem controlUnitToolStripMenuItem;
         private System.Windows.Forms.RichTextBox StatisticsTextBox;
         private System.Windows.Forms.RichTextBox PotentialHazardsTextBox;
         private System.Windows.Forms.RichTextBox DetectedHazardsTextBox;
@@ -831,7 +782,6 @@ namespace MipsPipelineUI {
         private System.Windows.Forms.Label Decode_Arg2;
         private System.Windows.Forms.Label Decode_Arg1;
         private System.Windows.Forms.Label Decode_Op;
-        private System.Windows.Forms.ToolStripMenuItem hazardsToolStripMenuItem;
         private System.Windows.Forms.Label ExecutionCyclesLabel;
     }
 }
