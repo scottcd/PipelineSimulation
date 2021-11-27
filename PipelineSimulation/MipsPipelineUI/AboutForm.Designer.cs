@@ -91,17 +91,20 @@ namespace MipsPipelineUI
             // 
             // listBox
             // 
+            this.listBox.Font = new System.Drawing.Font("Lucida Sans Unicode", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.listBox.FormattingEnabled = true;
-            this.listBox.ItemHeight = 15;
+            this.listBox.ItemHeight = 18;
             this.listBox.Location = new System.Drawing.Point(12, 27);
             this.listBox.Name = "listBox";
-            this.listBox.Size = new System.Drawing.Size(239, 334);
+            this.listBox.Size = new System.Drawing.Size(239, 328);
             this.listBox.TabIndex = 1;
+            this.listBox.SelectedIndexChanged += new System.EventHandler(this.listBox_SelectedIndexChanged);
             // 
             // infoBox
             // 
             this.infoBox.BackColor = System.Drawing.SystemColors.Window;
             this.infoBox.BorderStyle = System.Windows.Forms.BorderStyle.FixedSingle;
+            this.infoBox.Font = new System.Drawing.Font("Lucida Sans Unicode", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point);
             this.infoBox.Location = new System.Drawing.Point(257, 27);
             this.infoBox.Name = "infoBox";
             this.infoBox.Size = new System.Drawing.Size(406, 334);
