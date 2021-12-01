@@ -43,12 +43,14 @@ namespace MipsPipelineUI {
                 runButton.Text = "Run";
                 cycleTimer.Stop();
                 IsRunning = false;
+
             }
             else {
                 runButton.Text = "Stop";
                 cycleTimer.Interval = ClockSpeed;
                 cycleTimer.Start();
                 IsRunning = true;
+
             }
 
         }
@@ -61,6 +63,9 @@ namespace MipsPipelineUI {
                 stepButton.Enabled = false;
                 runButton.Enabled = false;
                 System.Diagnostics.Debug.WriteLine("Done!");
+                MIPS_Processor.FinalStatistics.calcCPI();
+                RunReport stats = new RunReport(MIPS_Processor.FinalStatistics.ToString());
+                stats.ShowDialog();
             }
             UpdateUI();
         }
@@ -302,6 +307,9 @@ namespace MipsPipelineUI {
             if (doneYet == -1) {
                 stepButton.Enabled = false;
                 runButton.Enabled = false;
+                MIPS_Processor.FinalStatistics.calcCPI();
+                RunReport stats = new RunReport(MIPS_Processor.FinalStatistics.ToString());
+                stats.ShowDialog();
             }
             UpdateUI();
         }

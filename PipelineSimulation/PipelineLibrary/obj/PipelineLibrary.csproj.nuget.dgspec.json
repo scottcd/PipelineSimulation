@@ -1,25 +1,23 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Chandler\\Source\\Repos\\PipelineSimulation\\PipelineSimulation\\PipelineLibrary\\PipelineLibrary.csproj": {}
+    "M:\\ETSUFiles\\OneDrive - East Tennessee State University\\Fall2021\\Computer Architecture\\Project2\\PipelineSimulation\\PipelineLibrary\\PipelineLibrary.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Chandler\\Source\\Repos\\PipelineSimulation\\PipelineSimulation\\PipelineLibrary\\PipelineLibrary.csproj": {
+    "M:\\ETSUFiles\\OneDrive - East Tennessee State University\\Fall2021\\Computer Architecture\\Project2\\PipelineSimulation\\PipelineLibrary\\PipelineLibrary.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Chandler\\Source\\Repos\\PipelineSimulation\\PipelineSimulation\\PipelineLibrary\\PipelineLibrary.csproj",
+        "projectUniqueName": "M:\\ETSUFiles\\OneDrive - East Tennessee State University\\Fall2021\\Computer Architecture\\Project2\\PipelineSimulation\\PipelineLibrary\\PipelineLibrary.csproj",
         "projectName": "PipelineLibrary",
-        "projectPath": "C:\\Users\\Chandler\\Source\\Repos\\PipelineSimulation\\PipelineSimulation\\PipelineLibrary\\PipelineLibrary.csproj",
-        "packagesPath": "C:\\Users\\Chandler\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Chandler\\Source\\Repos\\PipelineSimulation\\PipelineSimulation\\PipelineLibrary\\obj\\",
+        "projectPath": "M:\\ETSUFiles\\OneDrive - East Tennessee State University\\Fall2021\\Computer Architecture\\Project2\\PipelineSimulation\\PipelineLibrary\\PipelineLibrary.csproj",
+        "packagesPath": "C:\\Users\\MichaelPC\\.nuget\\packages\\",
+        "outputPath": "M:\\ETSUFiles\\OneDrive - East Tennessee State University\\Fall2021\\Computer Architecture\\Project2\\PipelineSimulation\\PipelineLibrary\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
-          "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
           "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
         ],
         "configFilePaths": [
-          "C:\\Users\\Chandler\\AppData\\Roaming\\NuGet\\NuGet.Config",
-          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+          "C:\\Users\\MichaelPC\\AppData\\Roaming\\NuGet\\NuGet.Config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
           "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
         ],
@@ -60,7 +58,7 @@
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.302\\RuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.403\\RuntimeIdentifierGraph.json"
         }
       }
     }

@@ -27,6 +27,7 @@ namespace PipelineLibrary {
         public IInstruction Instruction { get; private set; }
         public ControlSignal ControlUnit { get; private set; }
         public PipelineStatistics Statistics { get; set; }
+        public FinalStatistics FinalStatistics { get; set; }
 
         public Processor(int clockSpeed) {
             Pipeline = new IPipelineStage[5];
@@ -43,6 +44,7 @@ namespace PipelineLibrary {
             ExecutionALU = new FullALU();
 
             Statistics = new PipelineStatistics();
+            FinalStatistics = new FinalStatistics();
             Registers = new Dictionary<RegisterEnum, int>() {
                 {RegisterEnum.r0, 0},
                 {RegisterEnum.r1, 0},
@@ -110,6 +112,7 @@ namespace PipelineLibrary {
             }
             else if (Hazards.HazardStall.Item1 is true) {
                 IHazard hazard = Hazards.HazardStall.Item2;
+                FinalStatistics.hazardsHit++;
                 // stall and either execute, mem, or regwrite
                 switch (Hazards.HazardStall.Item2.Stage) {
                     case 1:
@@ -176,6 +179,7 @@ namespace PipelineLibrary {
                 
             }
             if (Pipeline.All((x) => x is null) && PipelineFunctions.NullCheckPipelineRegisters(this) is true) {
+                FinalStatistics.cycles = CycleNumber;
                 return -1;
             }
 
@@ -192,6 +196,7 @@ namespace PipelineLibrary {
             InstructionMemory = new List<IInstruction>();
             try {
                 InstructionMemory = CompilerFunctions.Compile(instructions);
+                FinalStatistics.instructionCount = InstructionMemory.Count;
             }
             catch (Exception e ) {
                 return "Invalid Syntax. Try again.\n";
@@ -296,6 +301,7 @@ namespace PipelineLibrary {
             IInstruction instruction = reg.Instruction;
             ControlSignal controlUnit = reg.ControlLogic;
 
+            FinalStatistics.memAccess++;
 
             if (controlUnit.RegWrite == true && controlUnit.MemRead == false) {
                 FullPipelineRegister mem = (FullPipelineRegister)PipelineRegisters[3];
@@ -324,6 +330,8 @@ namespace PipelineLibrary {
             Statistics.WriteStatistic(instruction, 4, CycleNumber);
             Hazards.CheckToRemoveHazard(instruction, controlUnit, this);
             reg.FlushPipeline();
+
+            FinalStatistics.registersHit++;
         }
 
         public override string ToString() {

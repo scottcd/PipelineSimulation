@@ -28,3 +28,35 @@ C:\Users\Chandler\Source\Repos\PipelineSimulation\PipelineSimulation\MipsPipelin
 C:\Users\Chandler\Source\Repos\PipelineSimulation\PipelineSimulation\MipsPipelineUI\obj\Debug\net5.0-windows\MipsPipelineUI.ConfigClockForm.resources
 C:\Users\Chandler\Source\Repos\PipelineSimulation\PipelineSimulation\MipsPipelineUI\obj\Debug\net5.0-windows\MipsPipelineUI.ConfigInstructionsForm.resources
 C:\Users\Chandler\Source\Repos\PipelineSimulation\PipelineSimulation\MipsPipelineUI\obj\Debug\net5.0-windows\MipsPipelineUI.AboutHazardsForm.resources
+M:\ETSUFiles\OneDrive - East Tennessee State University\Fall2021\Computer Architecture\Project2\PipelineSimulation\MipsPipelineUI\bin\Debug\net5.0-windows\MipsPipelineUI.exe
+M:\ETSUFiles\OneDrive - East Tennessee State University\Fall2021\Computer Architecture\Project2\PipelineSimulation\MipsPipelineUI\bin\Debug\net5.0-windows\MipsPipelineUI.deps.json
+M:\ETSUFiles\OneDrive - East Tennessee State University\Fall2021\Computer Architecture\Project2\PipelineSimulation\MipsPipelineUI\bin\Debug\net5.0-windows\MipsPipelineUI.runtimeconfig.json
+M:\ETSUFiles\OneDrive - East Tennessee State University\Fall2021\Computer Architecture\Project2\PipelineSimulation\MipsPipelineUI\bin\Debug\net5.0-windows\MipsPipelineUI.runtimeconfig.dev.json
+M:\ETSUFiles\OneDrive - East Tennessee State University\Fall2021\Computer Architecture\Project2\PipelineSimulation\MipsPipelineUI\bin\Debug\net5.0-windows\MipsPipelineUI.dll
+M:\ETSUFiles\OneDrive - East Tennessee State University\Fall2021\Computer Architecture\Project2\PipelineSimulation\MipsPipelineUI\bin\Debug\net5.0-windows\ref\MipsPipelineUI.dll
+M:\ETSUFiles\OneDrive - East Tennessee State University\Fall2021\Computer Architecture\Project2\PipelineSimulation\MipsPipelineUI\bin\Debug\net5.0-windows\MipsPipelineUI.pdb
+M:\ETSUFiles\OneDrive - East Tennessee State University\Fall2021\Computer Architecture\Project2\PipelineSimulation\MipsPipelineUI\bin\Debug\net5.0-windows\PipelineLibrary.dll
+M:\ETSUFiles\OneDrive - East Tennessee State University\Fall2021\Computer Architecture\Project2\PipelineSimulation\MipsPipelineUI\bin\Debug\net5.0-windows\PipelineLibrary.pdb
+M:\ETSUFiles\OneDrive - East Tennessee State University\Fall2021\Computer Architecture\Project2\PipelineSimulation\MipsPipelineUI\obj\Debug\net5.0-windows\MipsPipelineUI.csproj.AssemblyReference.cache
+M:\ETSUFiles\OneDrive - East Tennessee State University\Fall2021\Computer Architecture\Project2\PipelineSimulation\MipsPipelineUI\obj\Debug\net5.0-windows\MipsPipelineUI.AboutControlForm.resources
+M:\ETSUFiles\OneDrive - East Tennessee State University\Fall2021\Computer Architecture\Project2\PipelineSimulation\MipsPipelineUI\obj\Debug\net5.0-windows\MipsPipelineUI.AboutForm.resources
+M:\ETSUFiles\OneDrive - East Tennessee State University\Fall2021\Computer Architecture\Project2\PipelineSimulation\MipsPipelineUI\obj\Debug\net5.0-windows\MipsPipelineUI.AboutHazardsForm.resources
+M:\ETSUFiles\OneDrive - East Tennessee State University\Fall2021\Computer Architecture\Project2\PipelineSimulation\MipsPipelineUI\obj\Debug\net5.0-windows\MipsPipelineUI.AboutInstructionsForm.resources
+M:\ETSUFiles\OneDrive - East Tennessee State University\Fall2021\Computer Architecture\Project2\PipelineSimulation\MipsPipelineUI\obj\Debug\net5.0-windows\MipsPipelineUI.AboutRegistersForm.resources
+M:\ETSUFiles\OneDrive - East Tennessee State University\Fall2021\Computer Architecture\Project2\PipelineSimulation\MipsPipelineUI\obj\Debug\net5.0-windows\MipsPipelineUI.AboutStagesForm.resources
+M:\ETSUFiles\OneDrive - East Tennessee State University\Fall2021\Computer Architecture\Project2\PipelineSimulation\MipsPipelineUI\obj\Debug\net5.0-windows\MipsPipelineUI.ConfigClockForm.resources
+M:\ETSUFiles\OneDrive - East Tennessee State University\Fall2021\Computer Architecture\Project2\PipelineSimulation\MipsPipelineUI\obj\Debug\net5.0-windows\MipsPipelineUI.ConfigInstructionsForm.resources
+M:\ETSUFiles\OneDrive - East Tennessee State University\Fall2021\Computer Architecture\Project2\PipelineSimulation\MipsPipelineUI\obj\Debug\net5.0-windows\MipsPipelineUI.DirectInputForm.resources
+M:\ETSUFiles\OneDrive - East Tennessee State University\Fall2021\Computer Architecture\Project2\PipelineSimulation\MipsPipelineUI\obj\Debug\net5.0-windows\MipsPipelineUI.Properties.Resources.resources
+M:\ETSUFiles\OneDrive - East Tennessee State University\Fall2021\Computer Architecture\Project2\PipelineSimulation\MipsPipelineUI\obj\Debug\net5.0-windows\MipsPipelineUI.SimulationForm.resources
+M:\ETSUFiles\OneDrive - East Tennessee State University\Fall2021\Computer Architecture\Project2\PipelineSimulation\MipsPipelineUI\obj\Debug\net5.0-windows\MipsPipelineUI.csproj.GenerateResource.cache
+M:\ETSUFiles\OneDrive - East Tennessee State University\Fall2021\Computer Architecture\Project2\PipelineSimulation\MipsPipelineUI\obj\Debug\net5.0-windows\MipsPipelineUI.GeneratedMSBuildEditorConfig.editorconfig
+M:\ETSUFiles\OneDrive - East Tennessee State University\Fall2021\Computer Architecture\Project2\PipelineSimulation\MipsPipelineUI\obj\Debug\net5.0-windows\MipsPipelineUI.AssemblyInfoInputs.cache
+M:\ETSUFiles\OneDrive - East Tennessee State University\Fall2021\Computer Architecture\Project2\PipelineSimulation\MipsPipelineUI\obj\Debug\net5.0-windows\MipsPipelineUI.AssemblyInfo.cs
+M:\ETSUFiles\OneDrive - East Tennessee State University\Fall2021\Computer Architecture\Project2\PipelineSimulation\MipsPipelineUI\obj\Debug\net5.0-windows\MipsPipelineUI.csproj.CoreCompileInputs.cache
+M:\ETSUFiles\OneDrive - East Tennessee State University\Fall2021\Computer Architecture\Project2\PipelineSimulation\MipsPipelineUI\obj\Debug\net5.0-windows\MipsPipelineUI.csproj.CopyComplete
+M:\ETSUFiles\OneDrive - East Tennessee State University\Fall2021\Computer Architecture\Project2\PipelineSimulation\MipsPipelineUI\obj\Debug\net5.0-windows\MipsPipelineUI.dll
+M:\ETSUFiles\OneDrive - East Tennessee State University\Fall2021\Computer Architecture\Project2\PipelineSimulation\MipsPipelineUI\obj\Debug\net5.0-windows\ref\MipsPipelineUI.dll
+M:\ETSUFiles\OneDrive - East Tennessee State University\Fall2021\Computer Architecture\Project2\PipelineSimulation\MipsPipelineUI\obj\Debug\net5.0-windows\MipsPipelineUI.pdb
+M:\ETSUFiles\OneDrive - East Tennessee State University\Fall2021\Computer Architecture\Project2\PipelineSimulation\MipsPipelineUI\obj\Debug\net5.0-windows\MipsPipelineUI.genruntimeconfig.cache
+M:\ETSUFiles\OneDrive - East Tennessee State University\Fall2021\Computer Architecture\Project2\PipelineSimulation\MipsPipelineUI\obj\Debug\net5.0-windows\MipsPipelineUI.RunReport.resources

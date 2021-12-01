@@ -27,26 +27,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Chandler\\.nuget\\packages\\": {},
-    "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {},
+    "C:\\Users\\MichaelPC\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Chandler\\Source\\Repos\\PipelineSimulation\\PipelineSimulation\\MipsPipelineUI\\MipsPipelineUI.csproj",
+      "projectUniqueName": "M:\\ETSUFiles\\OneDrive - East Tennessee State University\\Fall2021\\Computer Architecture\\Project2\\PipelineSimulation\\MipsPipelineUI\\MipsPipelineUI.csproj",
       "projectName": "MipsPipelineUI",
-      "projectPath": "C:\\Users\\Chandler\\Source\\Repos\\PipelineSimulation\\PipelineSimulation\\MipsPipelineUI\\MipsPipelineUI.csproj",
-      "packagesPath": "C:\\Users\\Chandler\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Chandler\\Source\\Repos\\PipelineSimulation\\PipelineSimulation\\MipsPipelineUI\\obj\\",
+      "projectPath": "M:\\ETSUFiles\\OneDrive - East Tennessee State University\\Fall2021\\Computer Architecture\\Project2\\PipelineSimulation\\MipsPipelineUI\\MipsPipelineUI.csproj",
+      "packagesPath": "C:\\Users\\MichaelPC\\.nuget\\packages\\",
+      "outputPath": "M:\\ETSUFiles\\OneDrive - East Tennessee State University\\Fall2021\\Computer Architecture\\Project2\\PipelineSimulation\\MipsPipelineUI\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
-        "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages",
         "C:\\Program Files (x86)\\Microsoft\\Xamarin\\NuGet\\"
       ],
       "configFilePaths": [
-        "C:\\Users\\Chandler\\AppData\\Roaming\\NuGet\\NuGet.Config",
-        "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
+        "C:\\Users\\MichaelPC\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Xamarin.Offline.config"
       ],
@@ -61,8 +58,8 @@
         "net5.0-windows7.0": {
           "targetAlias": "net5.0-windows",
           "projectReferences": {
-            "C:\\Users\\Chandler\\Source\\Repos\\PipelineSimulation\\PipelineSimulation\\PipelineLibrary\\PipelineLibrary.csproj": {
-              "projectPath": "C:\\Users\\Chandler\\Source\\Repos\\PipelineSimulation\\PipelineSimulation\\PipelineLibrary\\PipelineLibrary.csproj"
+            "M:\\ETSUFiles\\OneDrive - East Tennessee State University\\Fall2021\\Computer Architecture\\Project2\\PipelineSimulation\\PipelineLibrary\\PipelineLibrary.csproj": {
+              "projectPath": "M:\\ETSUFiles\\OneDrive - East Tennessee State University\\Fall2021\\Computer Architecture\\Project2\\PipelineSimulation\\PipelineLibrary\\PipelineLibrary.csproj"
             }
           }
         }
@@ -94,7 +91,7 @@
             "privateAssets": "none"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.302\\RuntimeIdentifierGraph.json"
+        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\5.0.403\\RuntimeIdentifierGraph.json"
       }
     }
   }
